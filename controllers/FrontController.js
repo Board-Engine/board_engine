@@ -16,9 +16,24 @@ exports.getBoardCreate = (request, response) => {
 };
 
 exports.postBoardCreate = async (request, response) => {
-    //TODO VALIDATE DATA
+
+    const validations = [
+        request.body.title.length,
+        request.body.title.length > 3,
+        request.body.title.length < 30,
+
+
+    ];
+
+    if (! validations.every((element) => element )) {
+        console.log('no');
+        return response.redirect('/');
+    }
+
     const data = await {
         title: request.body.title,
+        slug: request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-'),
+        description: request.body.description
     };
 
     await Board.create(data)
