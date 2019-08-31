@@ -1,0 +1,29 @@
+<h1>create board</h1>
+
+{% if  expressFlash.length > 0 %}
+<div style="background: red;">
+    <h1>error</h1>
+</div>
+{% endif %}
+
+<pre>
+    {{ request | dump }}
+</pre>
+
+<form action="/board-create" method="post" enctype="">
+    <div style="margin-bottom: 1rem;">
+        <input type="text" name="title" autofocus required>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <input type="text" name="description">
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <input type="file" name="avatar">
+    </div>
+
+    <div>
+        <button type="submit">Ok</button>
+    </div>
+</form>
