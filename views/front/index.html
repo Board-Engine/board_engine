@@ -1,9 +1,37 @@
-<div>
-    <a href="/board-create">Create Board</a>
-</div>
+<h1>Welcome</h1>
 
-{% for board in boards %}
+<section>
+    <h2>Boards</h2>
     <div>
-        {{ board.title }}
+        <a href="/boards/create">Create Board</a>
     </div>
-{% endfor %}
+    <div>
+        {% for board in boards %}
+        <div style="background: #fee; margin: 1rem;">
+            <div>
+                <a href="/board/{{ board.slug }}">{{ board.title }}</a>
+            </div>
+            <div>
+                {{ board.description }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <a href="/boards">More boards</a>
+    </div>
+</section>
+
+<section>
+    <h2>Threads</h2>
+    {% for thread in threads %}
+    <div style="background: #00ffff; margin: 1rem;">
+        <div>
+            <a href="/board/{{ board.slug }}">{{ thread.title }}</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+
+

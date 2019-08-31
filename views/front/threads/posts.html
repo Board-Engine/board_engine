@@ -1,0 +1,11 @@
+<h1>posts</h1>
+
+<div style="margin-bottom: 1rem;">
+    <a href="/board/{{ slug }}/{{ board_id }}/create-post">New post</a>
+</div>
+
+{% for post in posts %}
+    <div>
+        {{ post.content }}
+    </div>
+{% endfor %}

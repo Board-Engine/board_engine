@@ -1,0 +1,11 @@
+<h1>Boards</h1>
+
+<div>
+    <a href="/boards/create">Create Board</a>
+</div>
+
+{% for board in boards %}
+    <div>
+        <h2><a href="/board/{{ board.slug }}/{{ thread.id }}">{{ board.title }}</a></h2>
+    </div>
+{% endfor %}

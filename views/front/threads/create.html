@@ -1,0 +1,25 @@
+<h1>Create thread</h1>
+<div>
+    {{ board.title }}
+</div>
+
+<form action="#" method="post">
+
+    <input type="hidden" name="id" value="{{ board.id }}">
+
+    <div style="margin-bottom: 1rem;">
+        <input type="text" name="title">
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <input type="file" name="avatar">
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <textarea name="content" rows="10"></textarea>
+    </div>
+
+    <div>
+        <button type="submit">Send</button>
+    </div>
+</form>
