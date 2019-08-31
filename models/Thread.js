@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const schema = new Schema({
+    board_id: String,
     title: String,
     slug: String,
-    description: String,
+    content: String,
     folder: String,
     avatar: String
 });
 
-const Board = mongoose.model('Board', schema);
+const Thread = mongoose.model('Thread', schema);
 
-module.exports = Board;
+module.exports = Thread;
