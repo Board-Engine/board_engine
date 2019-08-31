@@ -1,4 +1,5 @@
 const express = require('express');
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/board', { useNewUrlParser: true });
 const Board = require('../models/Board')
@@ -10,6 +11,17 @@ exports.index = async (request, response) => {
      });
 };
 
-exports.boardCreate = (request, response) => {
+exports.getBoardCreate = (request, response) => {
     response.render('front/board_create.html')
+};
+
+exports.postBoardCreate = async (request, response) => {
+    //TODO VALIDATE DATA
+    const data = await {
+        title: request.body.title,
+    };
+
+    await Board.create(data)
+
+    return await response.redirect('/');
 };
