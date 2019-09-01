@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const Board = require('../models/Board');
+const Thread = require('../models/Thread');
 
 exports.index = async (request, response) => {
     const boards = await Board.find();
@@ -23,7 +24,7 @@ exports.store = async (request, response) => {
     if (! validations.every((element) => element )) {
         console.log('no');
         request.flash('error', 'error')
-        return response.redirect('/');
+        return response.redirect('/boards/create');
     }
 
     const title = request.body.title;
@@ -38,7 +39,20 @@ exports.store = async (request, response) => {
         folder,
     };
 
-    await Board.create(data)
+    const board = await Board.create(data)
 
-    return await response.redirect('/boards');
+    return await response.redirect(`/boards/${board.slug}`);
+};
+
+exports.show = async (request, response) => {
+    const slug = request.params.slug;
+
+    const board = await Board.findOne({ slug });
+
+    const threads = await Thread.find({ board_id: board.id })
+
+    return response.render('front/boards/show.html', {
+        board,
+        threads
+    })
 };
