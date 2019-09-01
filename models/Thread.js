@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const schema = new Schema({
     board_id: String,
+    board_slug: String,
+
     title: String,
     slug: String,
     content: String,
