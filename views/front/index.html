@@ -1,4 +1,4 @@
-<h1>Welcome</h1>
+<h1>Welcome Anonymous</h1>
 
 <section>
     <h2>Boards</h2>
@@ -9,7 +9,7 @@
         {% for board in boards %}
         <div style="background: #fee; margin: 1rem;">
             <div>
-                <a href="/board/{{ board.slug }}">{{ board.title }}</a>
+                <a href="/boards/{{ board.slug }}">{{ board.title }}</a>
             </div>
             <div>
                 {{ board.description }}
@@ -24,6 +24,7 @@
 
 <section>
     <h2>Threads</h2>
+    <table>
     {% for thread in threads %}
     <div style="background: #00ffff; margin: 1rem;">
         <div>
@@ -31,6 +32,10 @@
         </div>
     </div>
     {% endfor %}
+    </table>
+    <div>
+        <a href="/threads">More threads</a>
+    </div>
 </section>
 
 

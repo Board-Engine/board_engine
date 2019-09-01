@@ -1,7 +1,7 @@
-<h1>Boards</h1>
+<h1>Boards {{ board.title }}</h1>
 
 <div>
-    <a href="/boards/create">Create Board</a>
+    <a href="/boards/{{ board.slug }}/threads-create">Create thread</a>
 </div>
 
 {% for board in boards %}

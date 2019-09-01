@@ -6,11 +6,8 @@
 </div>
 {% endif %}
 
-<pre>
-    {{ request | dump }}
-</pre>
 
-<form action="/board-create" method="post" enctype="">
+<form action="/boards" method="post" enctype="">
     <div style="margin-bottom: 1rem;">
         <input type="text" name="title" autofocus required>
     </div>

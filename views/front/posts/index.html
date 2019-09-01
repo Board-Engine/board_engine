@@ -1,0 +1,29 @@
+<h1>All posts in the thread</h1>
+
+<div>
+    <a href="">Create post</a>
+</div>
+
+<div>
+    {% for post in posts %}
+        <div>
+            {{ post.content }}
+        </div>
+    {% endfor %}
+</div>
+
+<div>
+    <h2>Add post</h2>
+    <form action="/posts/{{ thread_id }}" method="post">
+        <input type="hidden" name="thread_id" value="{{ thread_id }}">
+        <input type="hidden" name="board_slug" value="{{ board_slug }}">
+
+        <div>
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
+        </div>
+
+        <div>
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</div>
