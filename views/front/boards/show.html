@@ -1,7 +1,12 @@
-<h1>{{ board.title }}</h1>
+{% extends '../_layout.html' %}
 
-{% for thread in threads %}
-    <div>
-        <h2><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h2>
-    </div>
-{% endfor %}
+{% block content %}
+
+	<h1>{{ board.title }}</h1>
+
+	{% for thread in threads %}
+	    <div>
+	        <h2><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h2>
+	    </div>
+	{% endfor %}
+{% endblock %}

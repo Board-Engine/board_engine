@@ -1,12 +1,23 @@
-<h1>Boards {{ board.title }}</h1>
-<h2>Threads</h2>
+{% extends '../_layout.html' %}
 
-<div>
-    <a href="/boards/{{ board.slug }}/{{ board.id }}/create">Create thread</a>
-</div>
+{% block content %}
 
-{% for thread in threads %}
-    <div>
-        <h3><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h3>
-    </div>
-{% endfor %}
+	<div class="text-center" style="margin: 1rem;">
+		<h1>Boards {{ board.title }}</h1>
+
+		<div>
+		    <a href="/boards/{{ board.slug }}/{{ board.id }}/create" class="button">Create thread</a>
+		</div>
+
+		
+	</div>
+
+	{% for thread in threads %}
+	    <div class="card preview">
+	        <div class="card-body">
+	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h3>
+	        </div>
+	    </div>
+	{% endfor %}
+
+{% endblock %}

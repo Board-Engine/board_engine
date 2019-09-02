@@ -1,29 +1,68 @@
-<h1>All posts in the thread</h1>
+{% extends '../_layout.html' %}
 
-<div>
-    <a href="">Create post</a>
+{% block content %}
+
+
+
+<style>
+    .container-2 {
+        display: flex;
+    }
+
+    .section-posts {
+        width: 60%;
+    }
+
+    .section-add-post {
+        width: 40%;
+    }
+
+    .container-2 section {
+        margin: 2rem;
+    }
+</style>
+
+<div class="container-2">
+    <section class="section-posts">
+        <h1 class="title">All posts in the thread</h1>
+        <div>
+            {% for post in posts %}
+                <div class="card">
+                    <div class="card-body">
+                        {{ post.content }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section-add-post">
+        <h2 class="title">Add post</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/posts/{{ thread_id }}" method="post">
+                    <input type="hidden" name="thread_id" value="{{ thread_id }}">
+                    <input type="hidden" name="board_slug" value="{{ board_slug }}">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" value="Anonyme">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="file" name="image">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea name="content" rows="20"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="block">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
 
-<div>
-    {% for post in posts %}
-        <div>
-            {{ post.content }}
-        </div>
-    {% endfor %}
-</div>
-
-<div>
-    <h2>Add post</h2>
-    <form action="/posts/{{ thread_id }}" method="post">
-        <input type="hidden" name="thread_id" value="{{ thread_id }}">
-        <input type="hidden" name="board_slug" value="{{ board_slug }}">
-
-        <div>
-            <textarea name="content" id="" cols="30" rows="10"></textarea>
-        </div>
-
-        <div>
-            <button type="submit">Send</button>
-        </div>
-    </form>
-</div>
+{% endblock %}

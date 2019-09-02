@@ -1,0 +1,14 @@
+form {
+	padding: 1rem;
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1rem;
+	}
+
+	input, textarea {
+		display: inline-block;
+		width: 100%;
+	}
+}

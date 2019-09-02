@@ -1,42 +1,76 @@
-<h1>Welcome Anonymous</h1>
+{% extends './_layout.html' %}
 
-<section>
-    <h2>Boards</h2>
-    <div>
-        <a href="/boards/create">Create Board</a>
-    </div>
-    <div>
-        {% for board in boards %}
-        <div style="background: #fee; margin: 1rem;">
-            <div>
-                <a href="/boards/{{ board.slug }}">{{ board.title }}</a>
+{% block content %}
+    <div class="container">
+        <section>
+            <h1 class="title">Welcome Anon</h1>
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="text-center">
+                        <h2>Boards</h2>
+                        <div>
+                            <a href="/boards/create" class="button">Create Board</a>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                            </td>
+                        </thead>
+                        <tbody>
+                            {% for board in boards %}
+                            <tr>
+                                <td>
+                                    <a href="/boards/{{ board.slug }}">{{ board.title }}</a>
+                                </td>
+                                <td>
+                                   <a href="/boards/{{ board.slug }}">{{ board.description }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <a href="/boards">More boards</a>
+                    </div>
+                </div>
             </div>
-            <div>
-                {{ board.description }}
+        </section>
+
+        <section>
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h2>Threads</h2>
+                    </div>
+                   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Board</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for thread in threads %}
+                            <tr>
+                                <td>
+                                    <a href="/board/{{ board.slug }}">{{ thread.title }}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <a href="/threads">More threads</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        {% endfor %}
+        </section>
     </div>
-    <div>
-        <a href="/boards">More boards</a>
-    </div>
-</section>
-
-<section>
-    <h2>Threads</h2>
-    <table>
-    {% for thread in threads %}
-    <div style="background: #00ffff; margin: 1rem;">
-        <div>
-            <a href="/board/{{ board.slug }}">{{ thread.title }}</a>
-        </div>
-    </div>
-    {% endfor %}
-    </table>
-    <div>
-        <a href="/threads">More threads</a>
-    </div>
-</section>
-
+{% endblock %}
 
 

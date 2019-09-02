@@ -1,26 +1,41 @@
-<h1>create board</h1>
+{% extends '../_layout.html' %}
 
-{% if  expressFlash.length > 0 %}
-<div style="background: red;">
-    <h1>error</h1>
-</div>
-{% endif %}
+{% block content %}
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>create board</h1>
+
+                {% if  expressFlash.length > 0 %}
+                <div style="background: red;">
+                    <h1>error</h1>
+                </div>
+                {% endif %}
 
 
-<form action="/boards" method="post" enctype="">
-    <div style="margin-bottom: 1rem;">
-        <input type="text" name="title" autofocus required>
+                <form action="/boards" method="post" enctype="">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" autofocus required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" name="description">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image <small>only jpg, jpeg, png and svg</small></label>
+                        <input type="file" name="image">
+                    </div>
+
+                    <div>
+                        <button type="submit" class="block">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div style="margin-bottom: 1rem;">
-        <input type="text" name="description">
-    </div>
-
-    <div style="margin-bottom: 1rem;">
-        <input type="file" name="avatar">
-    </div>
-
-    <div>
-        <button type="submit">Ok</button>
-    </div>
-</form>
+{% endblock %}
