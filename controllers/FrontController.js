@@ -9,7 +9,7 @@ exports.index = async (request, response) => {
     const threads = await Thread.find().limit(10);
 
     return await response.render('front/index.html', {
-        boards,
-        threads
-     });
+		boards,
+		threads
+	});
 };
