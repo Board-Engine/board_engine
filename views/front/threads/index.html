@@ -4,18 +4,17 @@
 
 	<div class="text-center" style="margin: 1rem;">
 		<h1>Boards {{ board.title }}</h1>
-
 		<div>
-		    <a href="/boards/{{ board.slug }}/{{ board.id }}/create" class="button">Create thread</a>
+		    <a href="/boards/{{ board.slug }}/{{ board['_id'] }}/create" class="button">Create thread</a>
 		</div>
 
 		
 	</div>
-
-	{% for thread in threads %}
+	
+	{% for thread in board.threads %}
 	    <div class="card preview">
 	        <div class="card-body">
-	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h3>
+	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread.slug }}">{{ thread.title }}</a></h3>
 	        </div>
 	    </div>
 	{% endfor %}

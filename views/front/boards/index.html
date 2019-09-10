@@ -1,15 +1,20 @@
 {% extends '../_layout.html' %}
 
 {% block content %}
-	<h1>Boards {{ board.title }}</h1>
 
-	<div>
-	    <a href="/boards/{{ board.slug }}/threads-create">Create thread</a>
+	<div class="text-center">
+		<h1>Boards {{ board.title }}</h1>
+
+		<div>
+		    <a href="/boards/create" class="button">Create board</a>
+		</div>
 	</div>
 
 	{% for board in boards %}
-	    <div>
-	        <h2><a href="/board/{{ board.slug }}/{{ thread.id }}">{{ board.title }}</a></h2>
+	    <div class="card preview">
+	        <div class="card-body">
+	        	<h2><a href="/boards/{{ board.slug }}">{{ board.title }}</a></h2>
+	        </div>
 	    </div>
 	{% endfor %}
 {% endblock %}
