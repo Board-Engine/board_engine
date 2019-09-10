@@ -6,27 +6,38 @@ const Post = require('../models/Post');
 
 exports.index = async (request, response) => {
 
-    if (request.params.thread_slug) {
 
-        const board_slug = await request.params.board_slug;
-        const thread_id = await request.params.thread_id;
-        const posts = await Post.find({ thread_id });
+    const board_slug = await request.params.board_slug;
+    const thread_id = await request.params.thread_id;
 
-        return await response.render('front/posts/index.html', {
-            board_slug,
-            thread_id,
-            posts
-        })
-    }
-    else if (request.params.id) {
-        const thread_id = await request.params.id;
-        const posts = await Post.find({ thread_id });
+    let thread = await Thread.findById(thread_id);
 
-        return await response.render('front/posts/index.html', {
-            posts,
-            thread_id
-        })
-    }
+    thread = await Thread.aggregate([
+        { 
+            $lookup: { 
+                from: 'posts', 
+                localField: '_id', 
+                foreignField: 'thread_id', 
+                as: 'posts' 
+            }, 
+        },
+        {
+            $match: {
+                '_id': ObjectId(thread.id)
+            }
+        },
+        {
+            $limit: 1
+        }  
+    ]);
+
+    thread = await thread[0]
+    
+
+    return await response.render('front/posts/index.html', {
+        thread,
+        board_slug
+    })
 };
 
 exports.create = async (request, response) => {
@@ -36,15 +47,21 @@ exports.create = async (request, response) => {
 exports.store = async (request, response) => {
 
     // TODO VALIDATION
-    const thread_id = await request.body.thread_id;
+    const thread_id = await request.params.thread_id;
     const board_slug = await request.body.board_slug;
     const content = await request.body.content;
 
     const data = await {
+        thread_id: ObjectId(thread_id),
         content
     };
 
     await Post.create(data);
 
-    return await response.redirect(`/boards/${board_slug}/${thread_id}`)
+    if (board_slug) {
+        return await response.redirect(`/boards/${board_slug}/${thread_id}`);
+    }
+    else {
+        return await response.redirect(`/threads/${thread_id}`);
+    }
 };

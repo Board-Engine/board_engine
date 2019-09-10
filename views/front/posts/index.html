@@ -24,9 +24,20 @@
 
 <div class="container-2">
     <section class="section-posts">
+        {% if board_slug %}
+            <div>
+                <a href="/boards/{{ board_slug }}" class="button">&larr; Back to board</a>
+            </div>
+        {% endif %}
+        
         <h1 class="title">All posts in the thread</h1>
+        <div class="card">
+            <div class="card-body">
+                {{ thread.content }}
+            </div>
+        </div>
         <div>
-            {% for post in posts %}
+            {% for post in thread.posts %}
                 <div class="card">
                     <div class="card-body">
                         {{ post.content }}
@@ -40,8 +51,8 @@
         <h2 class="title">Add post</h2>
         <div class="card">
             <div class="card-body">
-                <form action="/posts/{{ thread_id }}" method="post">
-                    <input type="hidden" name="thread_id" value="{{ thread_id }}">
+                <form action="/posts/{{ thread['_id'] }}" method="post">
+                    
                     <input type="hidden" name="board_slug" value="{{ board_slug }}">
                     
                     <div class="form-group">

@@ -14,7 +14,7 @@
 	{% for thread in board.threads %}
 	    <div class="card preview">
 	        <div class="card-body">
-	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread.slug }}">{{ thread.title }}</a></h3>
+	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">{{ thread.title }}</a></h3>
 	        </div>
 	    </div>
 	{% endfor %}
