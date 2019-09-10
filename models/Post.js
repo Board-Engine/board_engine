@@ -1,11 +1,27 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const schema = new Schema({
-    board_id: String,
-    thread_id: String,
+    image: String,
     content: String,
-    created_at: Date,
+    thread_id: {
+    	type: Schema.Types.ObjectId,
+    	ref: 'threads',
+    	required: [
+    		true,
+    		'No thread id found'
+    	]
+    },
+
+    created_at: {
+    	type: Date,
+    	default: Date.now
+    },
+    updated_at: {
+    	type: Date,
+    	default: Date.now
+    },
 });
 
 const Post = mongoose.model('Post', schema);

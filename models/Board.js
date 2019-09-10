@@ -6,7 +6,15 @@ const schema = new Schema({
     slug: String,
     description: String,
     folder: String,
-    avatar: String
+
+    created_at: {
+    	type: Date,
+    	default: Date.now
+    },
+    updated_at: {
+    	type: Date,
+    	default: Date.now
+    },
 });
 
 const Board = mongoose.model('Board', schema);
