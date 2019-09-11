@@ -7,8 +7,9 @@
 	</head>
 	<body>
 		<header>
+			{% set color =  ['#f00', '#0f0', '#00f', '#ff0', '#F0F'] | random %}
 			<div class="logo-space">
-				<a href="/">Home</a>
+				<a href="/" style="font-size: 2rem; color: {{ color }}">HOME</a>
 			</div>
 			<nav>
 				<ul>
