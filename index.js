@@ -36,6 +36,11 @@ nunjucks.configure('views', {
     watch: true
 });
 
+var env = new nunjucks.Environment(null);
+env.addGlobal('value', '3');
+console.log(env.getGlobal('value'))
+
+
 
 const router = require('./routes/web');
 
