@@ -6,6 +6,7 @@ const schema = new Schema({
     slug: String,
     description: String,
     folder: String,
+    image_path: String,
 
     created_at: {
     	type: Date,
