@@ -28,6 +28,7 @@ app.use(session({
 }));
 app.use(flash());
 
+
 const nunjucks = require('nunjucks');
 
 nunjucks.configure('views', {
@@ -35,12 +36,6 @@ nunjucks.configure('views', {
     express: app,
     watch: true
 });
-
-var env = new nunjucks.Environment(null);
-env.addGlobal('value', '3');
-console.log(env.getGlobal('value'))
-
-
 
 const router = require('./routes/web');
 
