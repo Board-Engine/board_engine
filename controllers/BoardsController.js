@@ -1,7 +1,8 @@
 const crypto = require('crypto');
+const fs = require('fs');
+const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
-
 
 exports.index = async (request, response) => {
     const boards = await Board.find();
@@ -16,6 +17,18 @@ exports.create = (request, response) => {
 };
 
 exports.store = async (request, response) => {
+    if (Object.keys(request.files).length == 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    const folder = await crypto.randomBytes(12).toString('hex');
+
+    const image = await request.files.image;
+    const name = await image.name;
+
+    
+    const image_path = await `boards/${folder}/${name}`;
+    
     const validations = [
         request.body.title.length,
         request.body.title.length > 3,
@@ -31,16 +44,20 @@ exports.store = async (request, response) => {
     const title = await request.body.title;
     const slug = await request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
     const description = await request.body.description;
-    const folder = await crypto.randomBytes(12).toString('hex');
-
+    
     const data = await {
         title,
         slug,
         description,
-        folder
+        folder,
+        image_path
     };
 
-    const board = await Board.create(data)
+    await fsPromises.mkdir(`storage/app/boards/${folder}`, {recursive: true})
+
+
+    await image.mv(`storage/app/boards/${folder}/${name}`);
+    const board = await Board.create(data);
 
     return await response.redirect(`/boards/${board.slug}`);
 };
@@ -55,3 +72,9 @@ exports.show = async (request, response) => {
         board
     })
 };
+
+exports.test = async (request, response) => {
+
+    await fsPromises.mkdir('storage/app', {recursive: true})
+    response.send('k')
+}
