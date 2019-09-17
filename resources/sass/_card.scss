@@ -4,6 +4,18 @@
 	border: 1px solid rgba(0,0,0,.125);
 	border-radius: .25rem;
 
+	.card-header {
+		display: flex;
+		padding: .2rem 1rem;
+		justify-content: space-between;
+		border-bottom: 1px solid #ccc;
+		background: #f7f7f7;
+
+		time {
+			font-size: .8rem;
+		}
+	}
+
 	.card-body {
 		padding: 1rem;
 	}
