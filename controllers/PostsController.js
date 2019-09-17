@@ -1,5 +1,4 @@
 var ObjectId = require('mongoose').Types.ObjectId;
-
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
@@ -50,10 +49,12 @@ exports.store = async (request, response) => {
     const thread_id = await request.params.thread_id;
     const board_slug = await request.body.board_slug;
     const content = await request.body.content;
+    const author = await request.body.author;
 
     const data = await {
         thread_id: ObjectId(thread_id),
-        content
+        content,
+        author,
     };
 
     await Post.create(data);

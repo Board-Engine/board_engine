@@ -72,9 +72,3 @@ exports.show = async (request, response) => {
         board
     })
 };
-
-exports.test = async (request, response) => {
-
-    await fsPromises.mkdir('storage/app', {recursive: true})
-    response.send('k')
-}

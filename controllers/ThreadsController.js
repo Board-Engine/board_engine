@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const fs = require('fs');
+const fsPromises = fs.promises;
 const mongoose = require('mongoose');
 const Thread = require('../models/Thread');
 const Board = require('../models/Board');
@@ -61,13 +63,19 @@ exports.create = async (request, response) => {
 };
 
 exports.store = async (request, response) => {
-    const id = request.body.id;
-    const board_id = mongoose.Types.ObjectId(id);;
-    const title = request.body.title;
-    const slug = request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
-    const content = request.body.content;
-    const folder = crypto.randomBytes(20).toString('hex');
-    const avatar = '';
+    if (Object.keys(request.files).length == 0) {
+        return response.status(400).send('No files were uploaded.');
+    }
+
+    const id = await request.body.id;
+    const board = await Board.findById(id);
+    const folder = await board.folder;
+
+    
+    const board_id = await mongoose.Types.ObjectId(id);;
+    const title = await request.body.title;
+    const slug = await request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+    const content = await request.body.content;
 
     const data = await {
         board_id,
@@ -75,13 +83,19 @@ exports.store = async (request, response) => {
         slug,
         content,
         folder,
-        avatar,
     };
 
+    // Image
+    const image = await request.files.image;
+    const name = await image.name;
+    const image_path = await `boards/${folder}/${name}`;
+    await image.mv(`storage/app/boards/${folder}/${name}`);
+
+    data.image_path = image_path;
 
     const thread = await Thread.create(data);
 
-    const slugRedirect = request.body.slug;
+    const slugRedirect = await request.body.slug;
 
     return await response.redirect(`/boards/${slugRedirect}`);
 };
