@@ -33,6 +33,6 @@ router.get('/threads/:thread_id', PostsController.index);
 
 
 
-router.get('/test', BoardsController.test)
+router.get('/test', FrontController.test)
 
 module.exports = router;

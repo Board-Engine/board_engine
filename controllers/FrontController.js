@@ -34,3 +34,18 @@ exports.image = async (request, response) => {
 		}
 	});
 };
+
+exports.test = async (request, response) => {
+	/*
+	let date = 'Mon Sep 16 2019 17:01:05 GMT+0200 (Central European Summer Time)';
+	date = new Date(date);
+
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	const day = date.getDay();
+
+	const format = `${day}/${month}/${year}`;
+
+	response.send(format)
+	*/
+};
