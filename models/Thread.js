@@ -16,6 +16,8 @@ const schema = new Schema({
     		'No board id found'
     	]
     },
+    folder: String,
+    image_path: String,
 
     created_at: {
     	type: Date,

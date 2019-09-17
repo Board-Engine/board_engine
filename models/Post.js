@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const schema = new Schema({
+    author: String,
     image: String,
     content: String,
     thread_id: {
@@ -23,6 +24,11 @@ const schema = new Schema({
     	default: Date.now
     },
 });
+
+schema.method('sayHello', () => {
+    console.log('ok')
+    return 'okok'
+})
 
 const Post = mongoose.model('Post', schema);
 
