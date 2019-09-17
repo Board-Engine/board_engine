@@ -33,12 +33,25 @@
         <h1 class="title">All posts in the thread</h1>
         <div class="card">
             <div class="card-body">
-                {{ thread.content }}
+                <div>
+                    <img src="/images/{{ thread.image_path }}" alt="image board" style="max-width: 100%;">
+                </div>
+                <div>
+                    {{ thread.content }}
+                </div>
             </div>
         </div>
         <div>
             {% for post in thread.posts %}
                 <div class="card">
+                    <div class="card-header">
+                        <div>
+                            {{ post.author }}
+                        </div>
+                        <div>
+                            <time datetime="{{ post.created_at }}">{{ post.created_at }}</time>
+                        </div>
+                    </div>
                     <div class="card-body">
                         {{ post.content }}
                     </div>
@@ -56,7 +69,7 @@
                     <input type="hidden" name="board_slug" value="{{ board_slug }}">
                     
                     <div class="form-group">
-                        <input type="text" name="name" value="Anonyme">
+                        <input type="text" name="author" value="Anonyme">
                     </div>
 
                     <div class="form-group">
@@ -64,7 +77,7 @@
                     </div>
 
                     <div class="form-group">
-                        <textarea name="content" rows="20"></textarea>
+                        <textarea name="content" rows="20" required></textarea>
                     </div>
 
                     <div class="form-group">
