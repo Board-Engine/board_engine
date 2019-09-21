@@ -3,4 +3,9 @@ footer {
 	color: #fff;
 	padding: 3rem 1rem;
 	font-size: .9rem;
+	display: flex;
+
+	.col {
+		padding: 0 10rem;
+	}
 }

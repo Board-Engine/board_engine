@@ -57,7 +57,10 @@ footer {
   background: #212529;
   color: #fff;
   padding: 3rem 1rem;
-  font-size: .9rem; }
+  font-size: .9rem;
+  display: flex; }
+  footer .col {
+    padding: 0 10rem; }
 
 table {
   margin: 2rem 0;
