@@ -61,6 +61,10 @@ footer {
   display: flex; }
   footer .col {
     padding: 0 10rem; }
+  footer ul li {
+    list-style-type: none; }
+  footer a {
+    color: #fff; }
 
 table {
   margin: 2rem 0;
