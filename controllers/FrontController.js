@@ -11,10 +11,11 @@ exports.index = async (request, response) => {
     const threads = await Thread.find().limit(10);
     const head_title = 'Site';
 
+
     return await response.render('front/index.html', {
 		boards,
 		threads,
-		head_title
+		head_title,
 	});
 };
 

@@ -3,10 +3,8 @@
 {% block content %}
     <div class="container">
         <section>
-            <h1 class="title">Welcome Anon</h1>
             <div class="card">
                 <div class="card-body">
-                    
                     <div class="text-center">
                         <h2>Boards</h2>
                         <div>
@@ -43,10 +41,8 @@
         <section>
             <div class="card">
                 <div class="card-body">
-                    <div class="text-center">
-                        <h2>Threads</h2>
-                    </div>
-                   
+                    <h2 class="text-center">Threads</h2>
+
                     <table>
                         <thead>
                             <tr>
@@ -70,6 +66,22 @@
                     <div class="text-center">
                         <a href="/threads">More threads</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Stats</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Total posts</td>
+                                <td>{{ total_posts or '100' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>

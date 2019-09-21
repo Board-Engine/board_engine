@@ -33,11 +33,11 @@
         <h1 class="title">All posts in the thread</h1>
         <div class="card">
             <div class="card-body">
-                <div>
-                    <img src="/images/{{ thread.image_path }}" alt="image board" style="max-width: 100%;">
-                </div>
-                <div>
-                    {{ thread.content }}
+                <div class="card-content">
+                    <img src="/images/{{ thread.image_path }}" alt="image board">
+                    <div class="text">
+                        {{ thread.content }}
+                    </div>
                 </div>
             </div>
         </div>
