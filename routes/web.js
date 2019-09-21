@@ -31,7 +31,8 @@ router.post('/posts/:thread_id', PostsController.store);
 router.get('/threads', ThreadsController.index);
 router.get('/threads/:thread_id', PostsController.index);
 
-
+router.get('/contact', FrontController.getContact);
+router.post('/contact', FrontController.postContact);
 
 router.get('/test', FrontController.test)
 

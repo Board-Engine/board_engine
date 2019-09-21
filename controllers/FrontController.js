@@ -4,6 +4,7 @@ const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const Message = require('../models/Message');
 
 exports.index = async (request, response) => {
     const boards = await Board.find().limit(10);
@@ -33,6 +34,27 @@ exports.image = async (request, response) => {
 			response.end(content);
 		}
 	});
+};
+
+exports.getContact = async (request, response) => {
+	return response.render('front/contact.html');
+};
+
+exports.postContact = async (request, response) => {
+
+	const name = request.body.name;
+	const email = request.body.email;
+	const content = request.body.content;
+
+	const data = {
+		name,
+		email,
+		content
+	};
+
+	await Message.create(data);
+
+	return response.redirect('/');
 };
 
 exports.test = async (request, response) => {
