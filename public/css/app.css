@@ -121,5 +121,9 @@ main {
   width: 1344px;
   margin: 2rem auto; }
 
+.wrapper {
+  display: flex;
+  flex-wrap: wrap; }
+
 section .title {
   text-align: center; }

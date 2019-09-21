@@ -13,21 +13,20 @@
 		<div>
 		    <a href="/boards/{{ board.slug }}/{{ board['_id'] }}/create" class="button">Create thread</a>
 		</div>
-
-		
 	</div>
-	
-	{% for thread in board.threads %}
-	    <div class="card preview">
-	    	<div class="card-image">
-	    		<a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">
-	    			<img src="/images/{{ thread.image_path }}" alt="image board" style="max-width: 100%;">
-	    		</a>
-	    	</div>
-	        <div class="card-body">
-	        	<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">{{ thread.title }}</a></h3>
-	        </div>
-	    </div>
-	{% endfor %}
+	<div class="wrapper">
+		{% for thread in board.threads %}
+			<div class="card preview">
+				<div class="card-image">
+					<a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">
+						<img src="/images/{{ thread.image_path }}" alt="image board" style="max-width: 100%;">
+					</a>
+				</div>
+				<div class="card-body">
+					<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">{{ thread.title }}</a></h3>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 
 {% endblock %}
