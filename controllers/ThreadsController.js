@@ -14,6 +14,7 @@ exports.index = async (request, response) => {
         const board_slug = request.params.board_slug;
 
         let board = await Board.findOne({ slug: board_slug });
+        const head_title = board.title;
 
         board = await Board.aggregate([ 
             { 
@@ -38,15 +39,18 @@ exports.index = async (request, response) => {
         board = await board[0];
 
         return await response.render('front/threads/index.html', {
-            board
+            board,
+            head_title
         });
     }
     else {
         // get all threads
         const threads = await Thread.find();
+        const head_title = 'Threads';
 
         return await response.render('front/threads/table.html', {
-            threads
+            threads,
+            head_title
         });
     }
 

@@ -6,14 +6,19 @@ const Thread = require('../models/Thread');
 
 exports.index = async (request, response) => {
     const boards = await Board.find();
+    const head_title = 'Boards';
 
     return await response.render('front/boards/index.html', {
-        boards
+        boards,
+        head_title
     })
 };
 
 exports.create = (request, response) => {
-    return response.render('front/boards/create.html');
+    const head_title = 'Create board';
+    return response.render('front/boards/create.html', {
+        head_title
+    });
 };
 
 exports.store = async (request, response) => {
@@ -65,11 +70,12 @@ exports.store = async (request, response) => {
 
 exports.show = async (request, response) => {
     const slug = request.params.slug;
-
     const board = await Board.findOne({ slug });
+    const head_title = board.title;
 
 
     return response.render('front/boards/show.html', {
-        board
+        board,
+        head_title
     })
 };

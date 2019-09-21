@@ -9,10 +9,12 @@ const Message = require('../models/Message');
 exports.index = async (request, response) => {
     const boards = await Board.find().limit(10);
     const threads = await Thread.find().limit(10);
+    const head_title = 'Site';
 
     return await response.render('front/index.html', {
 		boards,
-		threads
+		threads,
+		head_title
 	});
 };
 
@@ -37,7 +39,10 @@ exports.image = async (request, response) => {
 };
 
 exports.getContact = async (request, response) => {
-	return response.render('front/contact.html');
+	const head_title = 'contact'
+	return response.render('front/contact.html', {
+		head_title
+	});
 };
 
 exports.postContact = async (request, response) => {

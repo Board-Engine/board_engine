@@ -5,11 +5,11 @@ const Post = require('../models/Post');
 
 exports.index = async (request, response) => {
 
-
     const board_slug = await request.params.board_slug;
     const thread_id = await request.params.thread_id;
 
     let thread = await Thread.findById(thread_id);
+    const head_title = thread.title;
 
     thread = await Thread.aggregate([
         { 
@@ -35,7 +35,8 @@ exports.index = async (request, response) => {
 
     return await response.render('front/posts/index.html', {
         thread,
-        board_slug
+        board_slug,
+        head_title
     })
 };
 
