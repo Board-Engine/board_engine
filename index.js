@@ -5,12 +5,12 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const sessionStore = new session.MemoryStore;
-
+const config = require('./env');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/board', { useNewUrlParser: true });
+mongoose.connect(`mongodb://localhost/${config.db.name}`, { useNewUrlParser: true });
 
-const port = 8080;
+const port = config.app.port;
 
 app.use(express.static('public'));
 
