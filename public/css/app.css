@@ -31,7 +31,7 @@ button, .button {
   .card .card-body {
     padding: 1rem; }
   .card.preview {
-    width: 300px;
+    width: 150px;
     margin: 1rem; }
     .card.preview .preview-title {
       font-size: 1rem;
