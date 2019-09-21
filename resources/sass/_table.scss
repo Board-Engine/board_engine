@@ -2,6 +2,7 @@ table {
 	margin: 2rem 0;
 	border: 1px solid #999;
 	width: 100%;
+	border-collapse:collapse;
 	
 	
 	thead {
@@ -10,13 +11,12 @@ table {
 		color: #fff;
 		margin: 0;
 		padding: 0;
-
 	}
 
 	tbody {
 		tr {
 			&:nth-child(even) {
-				background: rgba(#fff, 0.5);
+				background: rgba(0,0,0,.09);
 			}
 		}
 	}
@@ -35,3 +35,4 @@ table {
 		}
 	}
 }
+
