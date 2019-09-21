@@ -1,0 +1,55 @@
+{% extends './_layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center">Search</h1>
+                <form action="#" method="get">
+                    <div class="form-group">
+                        <label for="words">Words</label>
+                        <input type="text" name="words" value="{{ words }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <select name="section">
+                            <option value="boards" {{ "selected" if section == "boards" }}>boards</option>
+                            <option value="threads" {{ "selected" if section == "thread" }}>thread</option>
+                            <option value="posts" {{ "selected" if section == "posts" }}>posts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center">Results</h2>
+                <pre>
+                    {{ results | dump }}
+                </pre>
+                {% if section == "boards" %}
+                    {% for result in results %}
+                    <div class="result">
+                        <a href="/boards/{{ result.slug }}">{{ result.title }}</a>
+                    </div>
+                    {% else %}
+                        No result found.
+                    {% endfor %}
+                {% elif section === 'threads' %}
+                    {% for result in results %}
+                        <div class="result">
+                            <a href="/threads/{{ result['_id'] }}">{{ result.title }}</a>
+                        </div>
+                        {% else %}
+                            No result found.
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

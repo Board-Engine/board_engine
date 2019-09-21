@@ -40,7 +40,7 @@ exports.image = async (request, response) => {
 };
 
 exports.getContact = async (request, response) => {
-	const head_title = 'contact'
+	const head_title = 'contact';
 	return response.render('front/contact.html', {
 		head_title
 	});
@@ -61,6 +61,56 @@ exports.postContact = async (request, response) => {
 	await Message.create(data);
 
 	return response.redirect('/');
+};
+
+exports.getSearch = async (request, response) => {
+
+	const head_title = 'Search';
+	const words = request.query.words;
+	const section = request.query.section;
+
+	let results = [];
+
+	switch (section) {
+		case 'boards':
+			results = await Board.find(
+				{
+					"title": {
+						"$regex": words, "$options": "i"
+					}
+				},
+			);
+			break;
+		case 'threads':
+			results =  await Thread.find(
+				{
+					"title": {
+						"$regex": words, "$options": "i"
+					}
+				},
+			);
+			break;
+		case 'posts':
+			results =  await Post.find(
+				{
+					"content": {
+						"$regex": words, "$options": "i"
+					}
+				},
+			);
+			break;
+		default:
+			results = [];
+	}
+
+	console.log(results)
+
+	return response.render('front/search.html', {
+		head_title,
+		words,
+		section,
+		results,
+	})
 };
 
 exports.test = async (request, response) => {
