@@ -17,8 +17,9 @@ exports.create = (request, response) => {
 };
 
 exports.store = async (request, response) => {
-    if (Object.keys(request.files).length == 0) {
-        return res.status(400).send('No files were uploaded.');
+
+    if (Object.keys(request.files).length === 0) {
+        return response.status(400).send('No files were uploaded.');
     }
 
     const folder = await crypto.randomBytes(12).toString('hex');
@@ -45,7 +46,7 @@ exports.store = async (request, response) => {
     const slug = await request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
     const description = await request.body.description;
     
-    const data = await {
+    const data = {
         title,
         slug,
         description,
