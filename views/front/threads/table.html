@@ -1,11 +1,27 @@
-<h1>Threads list</h1>
+{% extends '../_layout.html' %}
 
-<table>
-    <tbody>
-        {% for thread in threads %}
-            <tr>
-                <td>{{ thread.title }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="text-center">Threads list</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for thread in threads %}
+                        <tr>
+                            <td>{{ thread.title }}</td>
+                            <td>{{ thread.content }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
