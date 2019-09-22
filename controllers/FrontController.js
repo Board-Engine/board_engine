@@ -8,8 +8,8 @@ const config = require('../env');
 const md = require('markdown-it')();
 
 exports.index = async (request, response) => {
-    const boards = await Board.find().limit(10);
-    const threads = await Thread.find().limit(10);
+    const boards = await Board.find().sort({'_id': 'desc'}).limit(10);
+    const threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
     const head_title = 'Site';
 
 

@@ -5,7 +5,7 @@ const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 
 exports.index = async (request, response) => {
-    const boards = await Board.find();
+    const boards = await Board.find().sort({'_id': 'desc'});
     const head_title = 'Boards';
 
     return await response.render('front/boards/index.html', {
