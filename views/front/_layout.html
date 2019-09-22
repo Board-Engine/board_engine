@@ -4,6 +4,8 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/app.css">
 		<title>{{ head_title }}</title>
+		{% block css %}
+		{% endblock %}
 	</head>
 	<body>
 		<header>
@@ -39,6 +41,8 @@
 			<div class="col">
 				Support
 			</div>
+			{% block js %}
+			{% endblock %}
 		</footer>
 	</body>
 </html>

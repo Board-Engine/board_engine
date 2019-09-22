@@ -1,32 +1,36 @@
 {% extends './_layout.html' %}
 
+{% block css %}
+    <style>
+        #address {
+            margin: 2rem;
+        }
+        #qrcode {
+            margin: 2rem;
+        }
+        #qrcode img {
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body text-center">
                 <h1>Contact</h1>
-                <form action="#" method="post">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" name="subject">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">Content</label>
-                        <textarea name="content" rows="10"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit">Send</button>
-                    </div>
-                </form>
+                <h2>qTox</h2>
+                <a href="https://tox.chat/download.html" class="button" target="_blank">download here</a>
+                <div id="address">{{ qtox }}</div>
+                <div id="qrcode"></div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script>
+        new QRCode(document.getElementById("qrcode"), "{{ qtox }}");
+    </script>
 {% endblock %}

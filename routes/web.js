@@ -34,7 +34,6 @@ router.get('/threads/:thread_id', PostsController.index);
 router.get('/search', FrontController.getSearch);
 
 router.get('/contact', FrontController.getContact);
-router.post('/contact', FrontController.postContact);
 
 router.get('/test', FrontController.test)
 
