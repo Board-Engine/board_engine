@@ -35,6 +35,8 @@ router.get('/search', FrontController.getSearch);
 
 router.get('/contact', FrontController.getContact);
 
+router.get('/rules', FrontController.rules);
+
 router.get('/test', FrontController.test)
 
 module.exports = router;

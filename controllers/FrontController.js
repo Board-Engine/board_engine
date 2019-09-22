@@ -5,6 +5,7 @@ const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
 const config = require('../env');
+const md = require('markdown-it')();
 
 exports.index = async (request, response) => {
     const boards = await Board.find().limit(10);
@@ -45,6 +46,22 @@ exports.getContact = async (request, response) => {
 	return response.render('front/contact.html', {
 		head_title,
 		qtox
+	});
+};
+
+exports.rules = async (request, response) => {
+	const head_title = 'Rules';
+	fs.readFile('storage/rules.md', 'utf8', (error, content) => {
+		if (error) {
+			console.log(error)
+			console.log('You have to create a file rules.md in storage folder')
+		}
+		const result = md.render(content);
+
+		return response.render('front/rules.html', {
+			head_title,
+			result
+		})
 	});
 };
 
