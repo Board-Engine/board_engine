@@ -1,0 +1,30 @@
+{% extends './_layout.html' %}
+
+{% block css %}
+    <style>
+        .container .card-body img {
+            display: block;
+            margin: 1rem auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1>Support</h1>
+                <h2>Monero (XMR)</h2>
+                <div>{{ support.monero }}</div>
+                <div id="monero"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script>
+        new QRCode(document.getElementById("monero"), "{{ support.monero }}");
+    </script>
+{% endblock %}

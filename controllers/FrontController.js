@@ -65,6 +65,16 @@ exports.rules = async (request, response) => {
 	});
 };
 
+exports.support = async (request, response) => {
+	const head_title = 'Search';
+	const support = config.support;
+
+	response.render('front/support.html', {
+		head_title,
+		support
+	});
+};
+
 exports.getSearch = async (request, response) => {
 
 	const head_title = 'Search';
