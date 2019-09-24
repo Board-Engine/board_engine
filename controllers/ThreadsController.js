@@ -45,12 +45,23 @@ exports.index = async (request, response) => {
     }
     else {
         // get all threads
-        const threads = await Thread.find();
+        const limit = 100;
+        let skip = 0;
+        if (request.query.page) {
+            const page = request.query.page;
+            skip = page * limit;
+        }
+        const threads = await Thread.find().skip(skip).limit(limit);
+        const total = await Thread.estimatedDocumentCount();
+        let paginates = await total / limit;
+        paginates = await Math.floor(paginates)
+
         const head_title = 'Threads';
 
         return await response.render('front/threads/table.html', {
             threads,
-            head_title
+            head_title,
+            paginates
         });
     }
 

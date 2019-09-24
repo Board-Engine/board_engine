@@ -21,6 +21,12 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div>
+                
+            {% for i in range(0, paginates) %}
+                <a href="/threads?page={{i}}" class="button">{{ i }}</a>
+            {% endfor %}
+            </div>
         </div>
     </div>
 </div>
