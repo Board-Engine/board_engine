@@ -7,8 +7,8 @@ const Helpers = {
         }
     },
     String: {
-        slug() {
-
+        slug(string) {
+            return string.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
         }
     }
 }
