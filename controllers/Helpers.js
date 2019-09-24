@@ -1,9 +1,10 @@
 const Helpers = {
     Array : {
         chunk(array, size) {
-            Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
-                array.slice(i * size, i * size + size)
-            );
+            return array.slice(0,(array.length + size - 1) / size | 0).
+            map((c, i) => {
+                return array.slice(size * i, size * i + size) 
+            })
         }
     },
     String: {
@@ -12,3 +13,5 @@ const Helpers = {
         }
     }
 }
+
+module.exports = Helpers;
