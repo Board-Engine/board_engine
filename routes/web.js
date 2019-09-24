@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
 const FrontController = require('../controllers/FrontController');
 const BoardsController = require('../controllers/BoardsController');
 const ThreadsController = require('../controllers/ThreadsController');
 const PostsController = require('../controllers/PostsController');
-
 const fileUpload = require('express-fileupload');
+
 router.use(fileUpload({
 	limits: {
 		// in MB
@@ -38,6 +37,9 @@ router.get('/contact', FrontController.getContact);
 router.get('/rules', FrontController.rules);
 
 router.get('/support', FrontController.support);
+
+router.get('/captcha', FrontController.captcha);
+router.post('/captcha/confirm', FrontController.postCaptchaConfirm);
 
 router.get('/test', FrontController.test);
 

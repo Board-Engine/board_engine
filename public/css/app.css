@@ -96,12 +96,31 @@ table {
 .text-right {
   text-align: right; }
 
+dialog {
+  position: fixed;
+  top: 5rem;
+  text-align: center;
+  border-radius: 1rem;
+  padding: 5rem; }
+  dialog .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #333;
+    cursor: pointer; }
+  dialog .dialog-title {
+    font-size: 1.6rem;
+    margin-top: 2rem; }
+
 body {
   margin: 0;
   padding: 0;
   font-family: arial;
   background: #f6f6f6;
   line-height: 1.6; }
+  body.back-drop {
+    background: #333; }
 
 a {
   color: #2b6cb0;

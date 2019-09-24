@@ -6,6 +6,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const sessionStore = new session.MemoryStore;
 const config = require('./env');
+const redis = require('redis');
+
+let RedisStore = require('connect-redis')(session)
+let client = redis.createClient()
 
 const mongoose = require('mongoose');
 mongoose.connect(`mongodb://localhost/${config.db.name}`, { useNewUrlParser: true });
@@ -18,13 +22,18 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-app.use(cookieParser('secret'));
+app.use(cookieParser('toto'));
 app.use(session({
-    cookie: { maxAge: 60000 },
-    store: sessionStore,
+    cookie: { 
+    	maxAge: 60000 ,
+    	secure: true,
+    	httpOnly: true,
+    },
     saveUninitialized: true,
-    resave: 'true',
-    secret: 'secret'
+    store: new RedisStore({ client }),
+    secret: 'toto',
+    resave: false,
+
 }));
 app.use(flash());
 

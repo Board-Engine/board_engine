@@ -5,6 +5,7 @@
 @import '_footer';
 @import '_table';
 @import '_typography';
+@import '_dialog';
 
 body { 
 	margin: 0;
@@ -12,6 +13,10 @@ body {
 	font-family: arial;
 	background: #f6f6f6;
 	line-height: 1.6;
+
+	&.back-drop {
+		background: #333;
+	}
 }
 
 a {
