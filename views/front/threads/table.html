@@ -23,9 +23,12 @@
             </table>
             <div>
                 
-            {% for i in range(0, paginates) %}
-                <a href="/threads?page={{i}}" class="button">{{ i }}</a>
-            {% endfor %}
+
+            <div class="paginate-wrapper">
+                {% for i in range(0, paginates) %}
+                    <a href="/threads?page={{i}}" class="button">{{ i }}</a>
+                {% endfor %}
+            </div>
             </div>
         </div>
     </div>

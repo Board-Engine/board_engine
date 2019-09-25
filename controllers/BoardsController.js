@@ -3,14 +3,27 @@ const fs = require('fs');
 const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
+const Helpers = require('./Helpers');
 
 exports.index = async (request, response) => {
-    const boards = await Board.find().sort({'_id': 'desc'});
+
+    const limit = 100;
+    let skip = 0;
+    if (request.query.page) {
+        const page = request.query.page;
+        skip = page * limit;
+    }
+
+    const boards = await Board.find().sort({'_id': 'desc'}).skip(skip).limit(limit);
+    const total = await Board.estimatedDocumentCount();
+    let paginates = await total / limit;
+    paginates = await Math.floor(paginates)
     const head_title = 'Boards';
 
     return await response.render('front/boards/index.html', {
         boards,
-        head_title
+        head_title,
+        paginates
     })
 };
 

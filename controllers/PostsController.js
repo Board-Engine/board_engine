@@ -2,6 +2,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const Helpers = require('./Helpers');
 
 exports.index = async (request, response) => {
 
@@ -45,6 +46,44 @@ exports.create = async (request, response) => {
 };
 
 exports.store = async (request, response) => {
+
+    const errors = [];
+    const validator = {
+        author: ['required', 'max:30'],
+        content: ['required', 'min:2', 'max:5'],
+    };
+
+    for (input in validator) {
+        const request_input = request.body[input];
+        const conditions = validator[input];
+        
+        for (condition of conditions) {
+
+            if (condition === 'required') {
+                if (! request_input.length) {
+                    errors.push(`The field ${input} is required`);
+                }
+            }
+
+            else if (condition.startsWith('min:')) {
+                const min = condition.split(':')[1];
+                if (request_input.length < min) {
+                    errors.push(`The field ${input} is too short`)
+                }
+            }
+
+            else if (condition.startsWith('max:')) {
+                const max = condition.split(':')[1]
+                if (request_input.length > max) {
+                    errors.push(`The field ${input} is too long`)
+                }
+            }
+        }
+    }
+
+    if (errors.length) {
+        return response.json(errors)
+    }
 
     // TODO VALIDATION
     const thread_id = await request.params.thread_id;

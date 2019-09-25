@@ -176,5 +176,13 @@ main {
   display: flex;
   flex-wrap: wrap; }
 
+.paginate-wrapper {
+  width: 100%;
+  text-align: center;
+  padding: 1rem; }
+  .paginate-wrapper .button {
+    display: inline-block;
+    margin: .1rem; }
+
 section .title {
   text-align: center; }

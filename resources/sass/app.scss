@@ -75,6 +75,17 @@ main {
 	flex-wrap: wrap;
 }
 
+.paginate-wrapper {
+	width: 100%;
+	text-align: center;
+	padding: 1rem;
+
+	.button {
+		display: inline-block;
+		margin: .1rem;
+	}
+}
+
 section {
 	.title {
 		text-align: center;

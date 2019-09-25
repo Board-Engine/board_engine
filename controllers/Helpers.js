@@ -11,6 +11,13 @@ const Helpers = {
         slug(string) {
             return string.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
         }
+    },
+    Validation: {
+        validate(object) {
+            for (input in object) {
+                console.log(input)
+            }
+        }
     }
 }
 

@@ -32,6 +32,14 @@
         
         <h1 class="title">All posts in the thread</h1>
         <div class="card">
+            <div class="card-header">
+                <div>
+                    Anonymous
+                </div>
+                <div>
+                    <time datetime="{{ thread.created_at }}">{{ thread.created_at }}</time>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="card-content">
                     <img src="/images/{{ thread.image_path }}" alt="image board">
