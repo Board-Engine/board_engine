@@ -4,6 +4,8 @@ const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Helpers = require('./Helpers');
+const redis = require('redis');
+const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
@@ -78,6 +80,7 @@ exports.store = async (request, response) => {
 
     await image.mv(`storage/app/boards/${folder}/${name}`);
     const board = await Board.create(data);
+    client.incr('boards');
 
     return await response.redirect(`/boards/${board.slug}`);
 };

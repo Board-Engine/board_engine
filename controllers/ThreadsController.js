@@ -6,6 +6,8 @@ const Thread = require('../models/Thread');
 const Board = require('../models/Board');
 const Post = require('../models/Post');
 const ObjectId = mongoose.Types.ObjectId;
+const redis = require('redis');
+const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
@@ -112,6 +114,8 @@ exports.store = async (request, response) => {
     const thread = await Thread.create(data);
 
     const slugRedirect = await request.body.slug;
+
+    client.incr('threads');
 
     return await response.redirect(`/boards/${slugRedirect}`);
 };

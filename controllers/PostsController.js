@@ -3,6 +3,8 @@ const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
 const Helpers = require('./Helpers');
+const redis = require('redis');
+const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
@@ -99,6 +101,7 @@ exports.store = async (request, response) => {
     };
 
     await Post.create(data);
+    client.incr('posts');
 
     if (board_slug) {
         return await response.redirect(`/boards/${board_slug}/${thread_id}`);

@@ -27,12 +27,18 @@ exports.index = async (request, response) => {
     const threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
     const head_title = 'Site';
     const counter = await getAsync('counter');
+    const boards_total = await getAsync('boards');
+    const threads_total = await getAsync('threads');
+    const posts_total = await getAsync('posts');
 
     return await response.render('front/index.html', {
 		boards,
 		threads,
 		head_title,
 		counter,
+		boards_total,
+		threads_total,
+		posts_total,
 	});
 };
 
