@@ -4,9 +4,10 @@ const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Helpers = require('./Helpers');
+const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
-
+    CounterMiddleware.handle();
     const limit = 100;
     let skip = 0;
     if (request.query.page) {
@@ -82,6 +83,7 @@ exports.store = async (request, response) => {
 };
 
 exports.show = async (request, response) => {
+    CounterMiddleware.handle();
     const slug = request.params.slug;
     const board = await Board.findOne({ slug });
     const head_title = board.title;

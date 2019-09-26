@@ -3,9 +3,10 @@ const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
 const Helpers = require('./Helpers');
+const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
-
+    CounterMiddleware.handle();
     const board_slug = await request.params.board_slug;
     const thread_id = await request.params.thread_id;
 

@@ -6,9 +6,10 @@ const Thread = require('../models/Thread');
 const Board = require('../models/Board');
 const Post = require('../models/Post');
 const ObjectId = mongoose.Types.ObjectId;
+const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
-
+    CounterMiddleware.handle();
     if (request.params.board_slug) {
         // get threads by board slug
         const board_slug = request.params.board_slug;
