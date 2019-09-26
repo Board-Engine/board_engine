@@ -36,6 +36,8 @@ button, .button {
         max-width: 100%; }
       .card .card-body .card-content .text {
         width: 100%; }
+    .card .card-body a {
+      display: inline-block; }
   .card.preview {
     width: 150px;
     margin: 1rem; }
