@@ -113,7 +113,7 @@ exports.postCaptchaConfirm = async (request, response) => {
 	const sess = await keysAsync('sess:*')
 	if (! sess.length) {
 		console.log('sess empty')
-		return results.status(202).send(false)
+		return response.status(202).send(false)
 	}
 
 	const captcha_input = await request.body.captcha;

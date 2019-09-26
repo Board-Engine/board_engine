@@ -8,11 +8,33 @@
 		Dialog: {
 			open() {
 				body.classList.add('back-drop');
-				dialog_captcha.setAttribute('open', true)
+				dialog_captcha.setAttribute('open', true);
 			},
 			close() {
 				body.classList.remove('back-drop');
-				dialog_captcha.removeAttribute('open')
+				dialog_captcha.removeAttribute('open');
+			}
+		},
+		Spam: {
+			isAllowed() {
+				const attempt = sessionStorage.getItem('attempt');
+				
+				if (attempt === null) {
+					sessionStorage.setItem('attempt', 5);
+				}
+				console.log(`isAllowed ${attempt}`);
+
+				return sessionStorage.getItem('attempt') > 0;
+				
+			},
+			restartAttempt() {
+				sessionStorage.setItem('attempt', 5);
+				console.log(sessionStorage.getItem('attempt'))
+			},
+			failAttempt() {
+				let attempt = sessionStorage.getItem('attempt');
+				attempt--;
+				sessionStorage.setItem('attempt', attempt)
 			}
 		}
 	}
@@ -28,11 +50,9 @@
 		else {
 			console.log(event.target.submit());
 		}
-
-		
 	});
 
-	const form_captcha = document.querySelector('.form_captcha').addEventListener('submit', (event) => {
+	document.querySelector('.form_captcha').addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		const url = '/captcha/confirm';
@@ -43,32 +63,41 @@
 			captcha
 		};
 
-		fetch(url, {
-			method: 'POST',
-			headers: new Headers({ "Content-Type": "application/json" }),
-			body: JSON.stringify(data)
-		})
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-			if (data) {
-				console.log('ok')
-				captcha_confirm = true;
+		if (Helpers.Spam.isAllowed()) {
+			fetch(url, {
+				method: 'POST',
+				headers: new Headers({ "Content-Type": "application/json" }),
+				body: JSON.stringify(data)
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
 
 				const message = dialog_captcha.querySelector('.message')
-				message.innerText = 'Success'
 
-				setTimeout(() => {
-					Helpers.Dialog.close();
-				}, 3000)
-				
-			}
-			else {
-				console.log('no')
-				captcha_confirm = false;
-			}
-		})
+				if (data) {
+					captcha_confirm = true;
+					message.innerText = 'Success';
+					Helpers.Spam.restartAttempt();
+
+					setTimeout(() => {
+						Helpers.Dialog.close();
+					}, 3000)
+					
+				}
+				else {
+					console.log('no');
+					message.innerText = 'Fail';
+					captcha_confirm = false;
+					Helpers.Spam.failAttempt();
+					document.location.reload();
+				}
+			})
+		}
+		else {
+			alert('too much fails')
+		}		
 	});
 
 	document.querySelector('.close').addEventListener('click', () => {
