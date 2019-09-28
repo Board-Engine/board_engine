@@ -114,8 +114,13 @@ dialog {
     top: 2rem;
     right: 2rem;
     padding: 0.4rem 0.8rem;
-    border: 1px solid #333;
-    cursor: pointer; }
+    border: 1px solid #101214;
+    cursor: pointer;
+    background: #2b6cb0;
+    color: #fff;
+    font-weight: bold; }
+    dialog .close:hover {
+      background: #3182ce; }
   dialog .dialog-title {
     font-size: 1.6rem;
     margin-top: 2rem; }

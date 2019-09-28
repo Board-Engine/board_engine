@@ -2,99 +2,103 @@
 
 {% block content %}
 
+    <style>
+        .container-2 {
+            display: flex;
+        }
 
+        .section-posts {
+            width: 60%;
+        }
 
-<style>
-    .container-2 {
-        display: flex;
-    }
+        .section-add-post {
+            width: 40%;
+        }
 
-    .section-posts {
-        width: 60%;
-    }
+        .container-2 section {
+            margin: 2rem;
+        }
+    </style>
 
-    .section-add-post {
-        width: 40%;
-    }
+    <div class="container-2">
+        <section class="section-posts">
+            {% if board_slug %}
+                <div>
+                    <a href="/boards/{{ board_slug }}" class="button">&larr; Back to board</a>
+                </div>
+            {% endif %}
 
-    .container-2 section {
-        margin: 2rem;
-    }
-</style>
-
-<div class="container-2">
-    <section class="section-posts">
-        {% if board_slug %}
+            <h1 class="title">All posts in the thread</h1>
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        Anonymous
+                    </div>
+                    <div>
+                        <time datetime="{{ thread.created_at }}">{{ thread.created_at }}</time>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-content">
+                        <img src="/images/{{ thread.image_path }}" alt="image board">
+                        <div class="text">
+                            {{ thread.content }}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div>
-                <a href="/boards/{{ board_slug }}" class="button">&larr; Back to board</a>
-            </div>
-        {% endif %}
-        
-        <h1 class="title">All posts in the thread</h1>
-        <div class="card">
-            <div class="card-header">
-                <div>
-                    Anonymous
-                </div>
-                <div>
-                    <time datetime="{{ thread.created_at }}">{{ thread.created_at }}</time>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="card-content">
-                    <img src="/images/{{ thread.image_path }}" alt="image board">
-                    <div class="text">
-                        {{ thread.content }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            {% for post in thread.posts %}
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            {{ post.author }}
+                {% for post in thread.posts %}
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                {{ post.author }}
+                            </div>
+                            <div>
+                                <time datetime="{{ post.created_at }}">{{ post.created_at }}</time>
+                            </div>
                         </div>
-                        <div>
-                            <time datetime="{{ post.created_at }}">{{ post.created_at }}</time>
+                        <div class="card-body">
+                            {{ post.content }}
                         </div>
                     </div>
-                    <div class="card-body">
-                        {{ post.content }}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <section class="section-add-post">
-        <h2 class="title">Add post</h2>
-        <div class="card">
-            <div class="card-body">
-                <form action="/posts/{{ thread['_id'] }}" method="post">
-                    
-                    <input type="hidden" name="board_slug" value="{{ board_slug }}">
-                    
-                    <div class="form-group">
-                        <input type="text" name="author" value="Anonyme">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="file" name="image">
-                    </div>
-
-                    <div class="form-group">
-                        <textarea name="content" rows="20" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="block">Send</button>
-                    </div>
-                </form>
+                {% endfor %}
             </div>
-        </div>
-    </section>
-</div>
+        </section>
 
+        <section class="section-add-post">
+            <h2 class="title">Add post</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/posts/{{ thread['_id'] }}" class="post" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="board_slug" value="{{ board_slug }}">
+
+                        <div class="form-group">
+                            <input type="text" name="author" value="Anonyme">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="file" name="image">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="content" rows="20" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="block">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% include "front/includes/dialog.html" %}
+
+{% endblock %}
+
+{% block js %}
+    <script src="/js/app.js"></script>
 {% endblock %}
