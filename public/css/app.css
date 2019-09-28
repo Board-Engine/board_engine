@@ -157,7 +157,9 @@ header {
   header nav {
     display: flex; }
     header nav ul {
-      display: flex; }
+      display: flex;
+      align-items: center;
+      margin: 0; }
       header nav ul li {
         list-style-type: none; }
         header nav ul li a {
