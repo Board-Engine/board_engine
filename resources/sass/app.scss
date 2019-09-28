@@ -14,10 +14,6 @@ body {
 	font-family: arial;
 	background: #f6f6f6;
 	line-height: 1.6;
-
-	&.back-drop {
-		background: #333;
-	}
 }
 
 a {
@@ -92,3 +88,12 @@ section {
 	}
 }
 
+.backdrop {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(#000, .5);
+	z-index: 33;
+	position: fixed;
+	top: 0;
+	left: 0;
+}

@@ -43,6 +43,8 @@ button, .button {
       font-size: 1rem;
       text-align: center;
       font-weight: initial; }
+    .card.preview a {
+      display: block; }
 
 form {
   padding: 1rem; }
@@ -50,9 +52,13 @@ form {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem; }
-  form input, form textarea {
+  form input, form textarea, form select {
     display: inline-block;
-    width: 100%; }
+    width: 100%;
+    padding: .375rem;
+    background: #fff;
+    border-radius: .2rem;
+    border: 1px solid #ced4da; }
 
 footer {
   background: #212529;
@@ -101,7 +107,8 @@ dialog {
   top: 5rem;
   text-align: center;
   border-radius: 1rem;
-  padding: 5rem; }
+  padding: 5rem;
+  z-index: 44; }
   dialog .close {
     position: absolute;
     top: 2rem;
@@ -136,8 +143,6 @@ body {
   font-family: arial;
   background: #f6f6f6;
   line-height: 1.6; }
-  body.back-drop {
-    background: #333; }
 
 a {
   color: #2b6cb0;
@@ -186,3 +191,12 @@ main {
 
 section .title {
   text-align: center; }
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 33;
+  position: fixed;
+  top: 0;
+  left: 0; }
