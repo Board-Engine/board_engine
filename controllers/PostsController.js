@@ -21,7 +21,7 @@ exports.index = async (request, response) => {
                 from: 'posts', 
                 localField: '_id', 
                 foreignField: 'thread_id', 
-                as: 'posts' 
+                as: 'posts'
             }, 
         },
         {
@@ -50,63 +50,35 @@ exports.create = async (request, response) => {
 
 exports.store = async (request, response) => {
 
-    const errors = [];
-    const validator = {
-        author: ['required', 'max:30'],
-        content: ['required', 'min:2', 'max:5'],
+    const validations = {
+        [request.body.author]: ['required', 'min:2', 'max:50'],
+        [request.body.content]: ['required', 'min:2', 'max:300'],
     };
 
-    for (input in validator) {
-        const request_input = request.body[input];
-        const conditions = validator[input];
-        
-        for (condition of conditions) {
-
-            if (condition === 'required') {
-                if (! request_input.length) {
-                    errors.push(`The field ${input} is required`);
-                }
-            }
-
-            else if (condition.startsWith('min:')) {
-                const min = condition.split(':')[1];
-                if (request_input.length < min) {
-                    errors.push(`The field ${input} is too short`)
-                }
-            }
-
-            else if (condition.startsWith('max:')) {
-                const max = condition.split(':')[1]
-                if (request_input.length > max) {
-                    errors.push(`The field ${input} is too long`)
-                }
-            }
-        }
+    if (! Helpers.Validation.validate(validations)) {
+        console.log('no')
     }
 
-    if (errors.length) {
-        return response.json(errors)
-    }
-
-    // TODO VALIDATION
-    const thread_id = await request.params.thread_id;
-    const board_slug = await request.body.board_slug;
-    const content = await request.body.content;
-    const author = await request.body.author;
-
-    const data = await {
-        thread_id: ObjectId(thread_id),
-        content,
-        author,
-    };
-
-    await Post.create(data);
-    client.incr('posts');
-
-    if (board_slug) {
-        return await response.redirect(`/boards/${board_slug}/${thread_id}`);
-    }
     else {
-        return await response.redirect(`/threads/${thread_id}`);
+        const thread_id = await request.params.thread_id;
+        const board_slug = await request.body.board_slug;
+        const content = await request.body.content;
+        const author = await request.body.author;
+
+        const data = {
+            thread_id: ObjectId(thread_id),
+            content,
+            author,
+        };
+
+        await Post.create(data);
+        client.incr('posts');
+
+        if (board_slug) {
+            return await response.redirect(`/boards/${board_slug}/${thread_id}`);
+        }
+        else {
+            return await response.redirect(`/threads/${thread_id}`);
+        }
     }
 };
