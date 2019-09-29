@@ -87,6 +87,8 @@ exports.store = async (request, response) => {
         [request.body.content]: ['required', 'min:2', 'max:300'],
     };
 
+   return  response.json(validations)
+
     if (Object.keys(request.files).length == 0) {
         return response.send('No files were uploaded.');
     }
