@@ -3,7 +3,7 @@
 {% block content %}
 
 	<div class="text-center">
-		<h1>Boards {{ board.title }}</h1>
+		<h1 data-id="{{ board['_id'] }}">Boards {{ board.title }}</h1>
 
 		<div>
 		    <a href="/boards/create" class="button">Create board</a>
