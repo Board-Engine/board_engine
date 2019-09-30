@@ -81,9 +81,25 @@ exports.create = async (request, response) => {
 };
 
 exports.store = async (request, response) => {
+
+    const validations = {
+        [request.body.title]: ['required', 'min:2', 'max:50'],
+        [request.body.content]: ['required', 'min:2', 'max:300'],
+    };
+
+   return  response.json(validations)
+
     if (Object.keys(request.files).length == 0) {
-        return response.status(400).send('No files were uploaded.');
+        return response.send('No files were uploaded.');
     }
+
+    if (! Helpers.Validation.validate(validations)) {
+        return response.status(400).send('Not validated');
+    }
+    else {
+        return response.json('ok')
+    }
+
 
     const id = await request.body.id;
     const board = await Board.findById(id);

@@ -7,8 +7,12 @@ form {
 		margin-bottom: 1rem;
 	}
 
-	input, textarea {
+	input, textarea, select {
 		display: inline-block;
 		width: 100%;
+		padding: .375rem;
+		background: #fff;
+		border-radius: .2rem;
+		border: 1px solid #ced4da;
 	}
 }

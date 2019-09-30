@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/app.css">
+		<link href="/images/favicon.jpg" rel="icon"  type="image/x-icon" />
 		<title>{{ head_title }}</title>
 		{% block css %}
 		{% endblock %}
@@ -11,7 +12,12 @@
 		<header>
 			{% set color =  ['#f00', '#0f0', '#0ff', '#ff0', '#F0F'] | random %}
 			<div class="logo-space">
+				<!--
 				<a href="/" style="font-size: 2rem; color: {{ color }}">HOME</a>
+				 -->
+				<a href="/">
+					<img src="/images/logo.svg" alt="logo">
+				</a>
 			</div>
 			<nav>
 				<ul>
@@ -42,10 +48,12 @@
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. A at aut commodi dolor eius eligendi enim eveniet fuga ipsam natus nobis odio perferendis quae qui, quia rem, repellendus sed totam.
 			</div>
 			<div class="col">
+
 			</div>
 			<div class="col"></div>
 			{% block js %}
 			{% endblock %}
 		</footer>
+		<div id="backdrop"></div>
 	</body>
 </html>

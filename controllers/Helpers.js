@@ -14,11 +14,36 @@ const Helpers = {
     },
     Validation: {
         validate(object) {
+            let errors = [];
             for (input in object) {
-                console.log(input)
+                const conditions = object[input];
+                for (condition of conditions) {
+
+                    if (condition === 'required') {
+                        if (! input.length) {
+                            errors.push(`The field ${'z'} is required`);
+                        }
+                    }
+                    else if (condition.startsWith('min:')) {
+                        const min = condition.split(':')[1];
+                        if (input.length < min) {
+                            errors.push(`The field ${'z'} is too short`)
+                        }
+                    }
+
+                    else if (condition.startsWith('max:')) {
+                        const max = condition.split(':')[1]
+                        if (input.length > max) {
+                            errors.push(`The field ${'z'} is too long`)
+                        }
+                    }
+                }
             }
+
+            return ! errors.length;
         }
     }
-}
+};
+
 
 module.exports = Helpers;

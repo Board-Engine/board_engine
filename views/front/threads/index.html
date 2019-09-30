@@ -3,7 +3,7 @@
 {% block content %}
 
 	<div class="text-center" style="margin: 1rem;">
-		<h1>Boards {{ board.title }}</h1>
+		<h1 data-id="{{ board['_id'] }}">Boards {{ board.title }}</h1>
 
 		<picture>
 			<source srcset="/images/{{ board.image_path }}">

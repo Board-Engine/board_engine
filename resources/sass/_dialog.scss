@@ -4,6 +4,7 @@ dialog {
 	text-align: center;
 	border-radius: 1rem;
 	padding: 5rem;
+	z-index: 44;
 
 	.close {
 		position: absolute;
@@ -11,8 +12,15 @@ dialog {
 		right: 2rem;
 
 		padding: 0.4rem 0.8rem;
-		border: 1px solid #333;
+		border: 1px solid #101214;
 		cursor: pointer;
+		background: $blue;
+		color: #fff;
+		font-weight: bold;
+
+		&:hover {
+			background: $blue2;
+		}
 	}
 
 	.dialog-title {

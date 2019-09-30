@@ -14,10 +14,6 @@ body {
 	font-family: arial;
 	background: #f6f6f6;
 	line-height: 1.6;
-
-	&.back-drop {
-		background: #333;
-	}
 }
 
 a {
@@ -33,12 +29,15 @@ header {
 	display: flex;
 	background: #212529;;
 	justify-content: space-between;
+	padding: .6rem;
 
 	nav {
 		display: flex;
 
 		ul {
 			display: flex;
+			align-items: center;
+			margin: 0;
 
 			li {
 				list-style-type: none;
@@ -92,3 +91,12 @@ section {
 	}
 }
 
+.backdrop {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(#000, .5);
+	z-index: 33;
+	position: fixed;
+	top: 0;
+	left: 0;
+}

@@ -45,6 +45,8 @@ button, .button {
       font-size: 1rem;
       text-align: center;
       font-weight: initial; }
+    .card.preview a {
+      display: block; }
 
 form {
   padding: 1rem; }
@@ -52,9 +54,13 @@ form {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem; }
-  form input, form textarea {
+  form input, form textarea, form select {
     display: inline-block;
-    width: 100%; }
+    width: 100%;
+    padding: .375rem;
+    background: #fff;
+    border-radius: .2rem;
+    border: 1px solid #ced4da; }
 
 footer {
   background: #212529;
@@ -103,14 +109,20 @@ dialog {
   top: 5rem;
   text-align: center;
   border-radius: 1rem;
-  padding: 5rem; }
+  padding: 5rem;
+  z-index: 44; }
   dialog .close {
     position: absolute;
     top: 2rem;
     right: 2rem;
     padding: 0.4rem 0.8rem;
-    border: 1px solid #333;
-    cursor: pointer; }
+    border: 1px solid #101214;
+    cursor: pointer;
+    background: #2b6cb0;
+    color: #fff;
+    font-weight: bold; }
+    dialog .close:hover {
+      background: #3182ce; }
   dialog .dialog-title {
     font-size: 1.6rem;
     margin-top: 2rem; }
@@ -138,8 +150,6 @@ body {
   font-family: arial;
   background: #f6f6f6;
   line-height: 1.6; }
-  body.back-drop {
-    background: #333; }
 
 a {
   color: #2b6cb0;
@@ -150,11 +160,14 @@ a {
 header {
   display: flex;
   background: #212529;
-  justify-content: space-between; }
+  justify-content: space-between;
+  padding: .6rem; }
   header nav {
     display: flex; }
     header nav ul {
-      display: flex; }
+      display: flex;
+      align-items: center;
+      margin: 0; }
       header nav ul li {
         list-style-type: none; }
         header nav ul li a {
@@ -188,3 +201,12 @@ main {
 
 section .title {
   text-align: center; }
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 33;
+  position: fixed;
+  top: 0;
+  left: 0; }

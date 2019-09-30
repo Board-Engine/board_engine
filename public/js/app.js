@@ -7,11 +7,11 @@
 	const Helpers = {
 		Dialog: {
 			open() {
-				body.classList.add('back-drop');
+				document.querySelector('#backdrop').classList.add('backdrop');
 				dialog_captcha.setAttribute('open', true);
 			},
 			close() {
-				body.classList.remove('back-drop');
+				document.querySelector('#backdrop').classList.remove('backdrop');
 				dialog_captcha.removeAttribute('open');
 			}
 		},
@@ -37,7 +37,7 @@
 				sessionStorage.setItem('attempt', attempt)
 			}
 		}
-	}
+	};
 
 	let captcha_confirm = false;
 
@@ -91,7 +91,10 @@
 					message.innerText = 'Fail';
 					captcha_confirm = false;
 					Helpers.Spam.failAttempt();
-					document.location.reload();
+
+					setTimeout(() => {
+						document.location.reload();
+					}, 3000)
 				}
 			})
 		}
