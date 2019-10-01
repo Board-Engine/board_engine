@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const path = require('path');
 const fs = require('fs');
 const fsPromises = fs.promises;
 const Board = require('../models/Board');
@@ -55,8 +56,13 @@ exports.image = async (request, response) => {
 			response.send('not exists')
 		}
 		else {
+			const extension = path.split('.').pop();
+
 			const content = await fsPromises.readFile(path);
-			response.writeHead(200,{'Content-type':'image/jpg'});
+			if (extension === 'svg') {
+				response.setHeader('content-type', 'image/svg+xml')	
+			}
+			
 			response.end(content);
 		}
 	});
