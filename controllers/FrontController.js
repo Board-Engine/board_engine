@@ -106,6 +106,14 @@ exports.support = async (request, response) => {
 	});
 };
 
+exports.ads = (request, response) => {
+	const head_title = 'Ads';
+
+	response.render('front/ads.html', {
+		head_title
+	})
+};
+
 exports.captcha = async (request, response) => {
 	const captcha = svgCaptcha.create({
 		color: true,

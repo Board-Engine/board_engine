@@ -36,6 +36,8 @@ router.get('/contact', FrontController.getContact);
 
 router.get('/rules', FrontController.rules);
 
+router.get('/ads', FrontController.ads);
+
 router.get('/support', FrontController.support);
 
 router.get('/captcha', FrontController.captcha);
