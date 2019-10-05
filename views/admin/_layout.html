@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <title>Admin</title>
+        <style>
+
+            #ul-menu {
+                background: #192a56;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+
+            #ul-menu li {
+                list-style-type: none;
+            }
+
+            #ul-menu a {
+                display: block;
+                padding: 1rem;
+                color: #fff;
+            }
+
+            #ul-menu a.active {
+                background: #306775;
+            }
+
+            #ul-menu a:hover {
+                background: #273c75;
+                color: #fff;
+                text-decoration: none;
+            }
+            
+            #content-wrapper {
+                background: #b9d3d7;
+                padding: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-md-2">
+                    <ul class="list-inside" id="ul-menu">
+                        <li><a class="{{ 'active' if tab == 'home' }}" href="/admin">Home</a></li>
+                        <li><a class="{{ 'active' if tab == 'boards' }}" href="/admin/boards">Boards</a></li>
+                        <li><a class="{{ 'active' if tab == 'threads' }}" href="#">Threads</a></li>
+                        <li><a class="{{ 'active' if tab == 'posts' }}" href="#">Posts</a></li>
+                        <li><a class="{{ 'active' if tab == 'board' }}" href="#">Reports</a></li>
+                        <li><a class="{{ 'active' if tab == 'board' }}" href="#">Ban</a></li>
+                        <li><a class="{{ 'active' if tab == 'board' }}" href="#">Public site</a></li>
+                        <li><a class="{{ 'active' if tab == 'board' }}" href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="col-md" id="content-wrapper">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

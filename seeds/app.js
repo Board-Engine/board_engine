@@ -2,11 +2,23 @@ const faker = require('faker');
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const User = require('../models/User');
 const crypto = require('crypto');
 const config = require('../env');
 const mongoose = require('mongoose');
 mongoose.connect(`mongodb://localhost:27017/${config.db.name}`, {useNewUrlParser: true});
 
+async function CollectionUsersSeeder() {
+    crypto.scrypt('admin', 'salt', 64, { N: 1024 }, (err, derivedKey) => {
+        if (err) throw err;
+        const password = derivedKey.toString('hex');  // '3745e48...aa39b34'
+
+        User.create({
+            name: 'admin',
+            password
+        })
+    });
+};
 
 async function CollectionBoardsSeeder () {
     for (let i = 0; i < 300; i++) {
@@ -63,9 +75,12 @@ async function CollectionPostsSeeder () {
     }
 }
 
+
+
 async function main() {
     // await CollectionBoardsSeeder();
    // await CollectionThreadsSeeder();
-    await CollectionPostsSeeder();
+    //await CollectionPostsSeeder();
+    await CollectionUsersSeeder();
 }
 main();

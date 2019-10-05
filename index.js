@@ -47,9 +47,12 @@ nunjucks.configure('views', {
 });
 
 const router = require('./routes/web');
+router.use(bodyParser.json())
 
+const admin_router = require('./routes/admin');
 router.use(bodyParser.json())
 
 app.use('/', router)
+app.use('/admin', admin_router)
 
 app.listen(port);

@@ -4,6 +4,7 @@ const FrontController = require('../controllers/FrontController');
 const BoardsController = require('../controllers/BoardsController');
 const ThreadsController = require('../controllers/ThreadsController');
 const PostsController = require('../controllers/PostsController');
+const LoginController = require('../controllers/Auth/LoginController');
 const fileUpload = require('express-fileupload');
 
 router.use(fileUpload({
@@ -42,6 +43,9 @@ router.get('/support', FrontController.support);
 
 router.get('/captcha', FrontController.captcha);
 router.post('/captcha/confirm', FrontController.postCaptchaConfirm);
+
+router.get('/login', LoginController.getLogin);
+router.post('/login', LoginController.postLogin);
 
 router.get('/test', FrontController.test);
 
