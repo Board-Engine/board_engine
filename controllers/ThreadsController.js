@@ -4,6 +4,7 @@ const fsPromises = fs.promises;
 const mongoose = require('mongoose');
 const Thread = require('../models/Thread');
 const Board = require('../models/Board');
+const Helpers = require('./Helpers');
 const Post = require('../models/Post');
 const ObjectId = mongoose.Types.ObjectId;
 const redis = require('redis');
@@ -82,36 +83,34 @@ exports.create = async (request, response) => {
 
 exports.store = async (request, response) => {
 
+    const limit = 1000 * 1000;
     const validations = {
         [request.body.title]: ['required', 'min:2', 'max:50'],
-        [request.body.content]: ['required', 'min:2', 'max:300'],
+        [request.body.description]: ['required', 'min:2', 'max:300'],
     };
 
-   return  response.json(validations)
-
-    if (Object.keys(request.files).length == 0) {
-        return response.send('No files were uploaded.');
-    }
-
     if (! Helpers.Validation.validate(validations)) {
-        return response.status(400).send('Not validated');
+        return response.json('fail')
     }
-    else {
-        return response.json('ok')
+    if (request.files === null) {
+        return response.status(400).send('No files were uploaded.');
     }
 
+    if (request.files.image.size > limit) {
+        return response.status(400).send('File too large. Not more 1 Mo');
+    }
 
     const id = await request.body.id;
     const board = await Board.findById(id);
     const folder = await board.folder;
 
-    
-    const board_id = await mongoose.Types.ObjectId(id);;
+    const board_id = await ObjectId(id);
+
     const title = await request.body.title;
     const slug = await request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
     const content = await request.body.content;
 
-    const data = await {
+    const data = {
         board_id,
         title,
         slug,
@@ -123,9 +122,9 @@ exports.store = async (request, response) => {
     const image = await request.files.image;
     const name = await image.name;
     const image_path = await `boards/${folder}/${name}`;
-    await image.mv(`storage/app/boards/${folder}/${name}`);
+    await image.mv(`storage/app/${image_path}`);
 
-    data.image_path = image_path;
+    data.image_path = await image_path;
 
     const thread = await Thread.create(data);
 
@@ -134,4 +133,5 @@ exports.store = async (request, response) => {
     client.incr('threads');
 
     return await response.redirect(`/boards/${slugRedirect}`);
+
 };
