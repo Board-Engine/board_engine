@@ -26,6 +26,13 @@ button, .button {
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
     background: rgba(0, 0, 0, 0.09); }
+    .card .card-header .button-small {
+      background: inherit;
+      background: #212529;
+      padding: .2rem .8rem;
+      font-size: .8rem; }
+      .card .card-header .button-small:hover {
+        background: #48494b; }
     .card .card-header time {
       font-size: .8rem; }
   .card .card-body {
@@ -35,7 +42,8 @@ button, .button {
       .card .card-body .card-content img {
         max-width: 100%; }
       .card .card-body .card-content .text {
-        width: 100%; }
+        width: 100%;
+        padding-left: 1rem; }
     .card .card-body a {
       display: inline-block; }
   .card.preview {

@@ -11,6 +11,17 @@
 		border-bottom: 1px solid #ccc;
 		background: rgba(0, 0, 0, 0.09);
 
+		.button-small {
+			background: inherit;
+			background: #212529;
+			padding: .2rem .8rem;
+			font-size: .8rem;
+			
+			&:hover {
+				background: #48494b;
+			}
+		}
+
 		time {
 			font-size: .8rem;
 		}
@@ -28,6 +39,7 @@
 
 			.text {
 				width: 100%;
+				padding-left: 1rem;
 			}
 		}
 
