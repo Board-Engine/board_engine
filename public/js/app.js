@@ -106,6 +106,14 @@
 	document.querySelector('.close').addEventListener('click', () => {
 		Helpers.Dialog.close()
 	});
+
+	if (document.querySelectorAll('report')) {
+		for (report of document.querySelectorAll('.report')) {
+			report.addEventListener('click', (event) => {
+				alert('ok')
+			});
+		}
+	}
 })();
 
 
