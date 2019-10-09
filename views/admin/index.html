@@ -1,13 +1,81 @@
 {% extends './_layout.html' %}
 
 {% block content %}
-    <div class="rounded shadow-lg bg-white">
-        <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2">Welcome Admin</div>
-            <p class="text-gray-700 text-base">
-
-            </p>
+    <div class="card mb-5">
+        <div class="card-body">
+            <h1>Welcome admin</h1>
         </div>
     </div>
 
+    <div class="card mb-5">
+        <div class="card-body">
+            <h2>Boards</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>description</th>
+                        <th>created_at</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for board in boards %}
+                    <tr>
+                        <td>{{ board.id }}</td>
+                        <td>{{ board.title }}</td>
+                        <td>{{ board.description }}</td>
+                        <td>{{ board.created_at }}</td>
+                        <td><a href="#" class="btn btn-primary btn-block">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <h2>Threads</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="bg-dark text-white">
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>description</th>
+                    <th>created_at</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for thread in threads %}
+                    <tr>
+                        <td>{{ thread.id }}</td>
+                        <td>{{ thread.title }}</td>
+                        <td>{{ thread.description }}</td>
+                        <td>{{ thread.created_at }}</td>
+                        <td><a href="#" class="btn btn-primary btn-block">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <h2>Posts</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th>id</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
