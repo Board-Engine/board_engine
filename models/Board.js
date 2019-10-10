@@ -7,6 +7,7 @@ const schema = new Schema({
     description: String,
     folder: String,
     image_path: String,
+    ip: String,
 
     created_at: {
     	type: Date,

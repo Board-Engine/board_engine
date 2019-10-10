@@ -23,6 +23,7 @@ const CounterMiddleware = require('../middleware/Counter');
 
 
 exports.index = async (request, response) => {
+	
 	CounterMiddleware.handle()
     const boards = await Board.find().sort({'_id': 'desc'}).limit(10);
     const threads = await Thread.find().sort({'_id': 'desc'}).limit(10);

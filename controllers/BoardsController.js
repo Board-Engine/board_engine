@@ -56,6 +56,9 @@ exports.store = async (request, response) => {
         return response.status(400).send('File too large. Not more 1 Mo');
     }
 
+    const ip = crypto.createHmac('sha256', (request.headers['x-forwarded-for'] || request.connection.remoteAddress)).update(config.app.crypto.update).digest('hex');
+
+
     const folder = await crypto.randomBytes(12).toString('hex');
 
     const image = await request.files.image;
@@ -72,7 +75,8 @@ exports.store = async (request, response) => {
         slug,
         description,
         folder,
-        image_path
+        image_path,
+        ip
     };
 
     await fsPromises.mkdir(`storage/app/boards/${folder}`, {recursive: true})

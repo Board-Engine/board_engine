@@ -14,6 +14,7 @@ const schema = new Schema({
     		'No thread id found'
     	]
     },
+    ip: String,
 
     created_at: {
     	type: Date,
