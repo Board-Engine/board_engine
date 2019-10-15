@@ -12,7 +12,7 @@ let RedisStore = require('connect-redis')(session)
 let client = redis.createClient()
 
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb://localhost/${config.db.name}`, { useNewUrlParser: true });
+mongoose.connect(`mongodb://localhost/${config.db.name}`, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 
 const port = config.app.port;
 
