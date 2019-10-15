@@ -1,18 +1,18 @@
 (() => {
-	let is_backdrop = false;
 
 	const dialog_captcha = document.querySelector('.dialog_captcha');
 	const body = document.body;
+	const dialog_report = document.querySelector('.dialog_report');
 
 	const Helpers = {
 		Dialog: {
-			open() {
+			open(selector) {
 				document.querySelector('#backdrop').classList.add('backdrop');
-				dialog_captcha.setAttribute('open', true);
+				document.querySelector(selector).setAttribute('open', true);
 			},
-			close() {
+			close(selector) {
 				document.querySelector('#backdrop').classList.remove('backdrop');
-				dialog_captcha.removeAttribute('open');
+				document.querySelector(selector).removeAttribute('open');
 			}
 		},
 		Spam: {
@@ -25,7 +25,6 @@
 				console.log(`isAllowed ${attempt}`);
 
 				return sessionStorage.getItem('attempt') > 0;
-				
 			},
 			restartAttempt() {
 				sessionStorage.setItem('attempt', 5);
@@ -45,7 +44,7 @@
 		event.preventDefault();
 
 		if (! captcha_confirm) {
-			Helpers.Dialog.open();
+			Helpers.Dialog.open('.dialog_captcha');
 		}
 		else {
 			console.log(event.target.submit());
@@ -55,9 +54,11 @@
 	document.querySelector('.form_captcha').addEventListener('submit', (event) => {
 		event.preventDefault();
 
+		const this_form = event.target;
+
 		const url = '/captcha/confirm';
 
-		const captcha = document.querySelector('#txt').value;
+		const captcha = this_form.querySelector('.txt').value;
 
 		const data = {
 			captcha
@@ -74,7 +75,7 @@
 			})
 			.then((data) => {
 
-				const message = dialog_captcha.querySelector('.message')
+				const message = this_form.querySelector('.message');
 
 				if (data) {
 					captcha_confirm = true;
@@ -82,7 +83,7 @@
 					Helpers.Spam.restartAttempt();
 
 					setTimeout(() => {
-						Helpers.Dialog.close();
+						Helpers.Dialog.close('.dialog_captcha');
 					}, 3000)
 					
 				}
@@ -103,17 +104,59 @@
 		}		
 	});
 
-	document.querySelector('.close').addEventListener('click', () => {
-		Helpers.Dialog.close()
-	});
+	// Close
+	for (close of document.querySelectorAll('.close')) {
+		close.addEventListener('click', (event) => {
+			const class_modal = event.target.closest('dialog').className;
+			Helpers.Dialog.close(`.${class_modal}`);
+		})
+	}
 
-	if (document.querySelectorAll('report')) {
+	if (document.querySelectorAll('.report')) {
+		let id = '';
+
 		for (report of document.querySelectorAll('.report')) {
 			report.addEventListener('click', (event) => {
-				alert('ok')
+				id = event.target.dataset.id;
+				Helpers.Dialog.open('.dialog_report')
 			});
 		}
+
+		document.querySelector('.dialog_report').querySelector('form').addEventListener('submit', (event) => {
+			event.preventDefault();
+			const this_form = event.target;
+
+			const report = this_form.querySelector('#report').value
+
+			const data = {
+				report
+			};
+
+			const url = '/report';
+
+			fetch(url, {
+				method: 'POST',
+				headers: new Headers({ "Content-Type": "application/json" }),
+				body: JSON.stringify(data)
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+
+				const message = this_form.querySelector('.message');
+
+				if (data) {
+
+
+
+					Helpers.Spam.restartAttempt();
+
+					setTimeout(() => {
+						Helpers.Dialog.close('dialog_captcha');
+					}, 3000)
+				}
+			})
+		});
 	}
 })();
-
-

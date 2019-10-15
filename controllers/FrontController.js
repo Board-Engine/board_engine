@@ -5,6 +5,7 @@ const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const Report = require('../models/Report');
 const config = require('../env');
 const md = require('markdown-it')();
 const svgCaptcha = require('svg-captcha');
@@ -158,6 +159,19 @@ exports.postCaptchaConfirm = async (request, response) => {
 
 	return response.status(202).send(false);
 };
+
+exports.postReport = async (request, response) => {
+	
+	const report = request.body.report
+
+	const data = {
+		report
+	}
+
+	await Report.create(data);
+
+	return await response.json(true);
+}
 
 exports.getSearch = async (request, response) => {
 	CounterMiddleware.handle()

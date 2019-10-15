@@ -8,14 +8,14 @@
     <div class="message">
         
     </div>
-    <div id="captcha_wrapper">
-        <img src="/captcha" alt="">
+    <div class="captcha_wrapper">
+        <img src="/captcha" alt="captcha image">
     </div>
 
     <form class="form_captcha">
        <div class="form-group">
             <label for="txt">Write the code here</label>
-            <input type="text" id="txt">
+            <input type="text" class="txt">
        </div>
        <div class="form-group">
            <button>Send</button>
@@ -30,11 +30,24 @@
     <div class="dialog-title">
         Report
     </div>
+    <div class="message">
+        
+    </div>
     <div class="captcha_wrapper">
-        <img src="/captcha" alt="">
+        <img src="/captcha" alt="captcha image">
     </div>
 
-    <form class="form_captcha">
-
+    <form>
+        <div class="form-group">
+            <label for="txt">Write the code here</label>
+            <input type="text" class="txt">
+        </div>
+        <div class="form-group">
+            <label for="report">Report</label>
+            <textarea id="report" rows="8"></textarea>
+        </div>
+        <div class="form-group">
+           <button>Send</button>
+       </div>
     </form>
 </dialog>

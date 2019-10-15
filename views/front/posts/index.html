@@ -38,7 +38,7 @@
                         <time datetime="{{ thread.created_at }}">{{ thread.created_at }}</time>
                     </div>
                     <div>
-                        <button class="button-small report">Report</button>
+                        <button class="button-small report" data-id="{{ thread['_id'] }}">Report</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -61,7 +61,7 @@
                                 <time datetime="{{ post.created_at }}">{{ post.created_at }}</time>
                             </div>
                             <div>
-                                <button class="button-small report">Report</button>
+                                <button class="button-small report" data-id="{{ post['_id'] }}">Report</button>
                             </div>
                         </div>
                         <div class="card-body">

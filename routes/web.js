@@ -44,6 +44,8 @@ router.get('/support', FrontController.support);
 router.get('/captcha', FrontController.captcha);
 router.post('/captcha/confirm', FrontController.postCaptchaConfirm);
 
+router.post('/report', FrontController.postReport);
+
 router.get('/login', LoginController.getLogin);
 router.post('/login', LoginController.postLogin);
 
