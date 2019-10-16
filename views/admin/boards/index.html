@@ -15,15 +15,15 @@
             </div>
             <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>created_at</th>
-                </tr>
+                    <tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>description</th>
+                        <th>created_at</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    {% for board in boards %}
+                    {% for board in boards.docs %}
                         <tr>
                             <td><a href="/admin/boards/{{ board['_id'] }}">{{ board['_id'] }}</a></td>
                             <td>{{ board.title }}</td>
@@ -35,13 +35,22 @@
             </table>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    {% if boards.hasPrevPage %}
+                        <li class="page-item"><a class="page-link" href="?page={{ boards.prevPage }}">Previous</a></li>
+                    {% endif %}
+
+                    {% for i in range(1, boards.totalPages) %}
+                        <li class="page-item {{ 'active' if i == boards.page }}"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                    
+                    {% if boards.hasNextPage %}
+                        <li class="page-item"><a class="page-link" href="?page={{ boards.nextPage }}">Next</a></li>
+                    {% endif %}
+                    
                 </ul>
             </nav>
+            <h5 class="mt-5">Debug</h5>
+            <pre class="bg-dark text-light p-5">{{ boards | dump }}</pre>
         </div>
     </div>
 {% endblock %}

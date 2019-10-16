@@ -2,13 +2,24 @@ const Board = require('../../models/Board');
 
 exports.index = async (request, response) => {
     const tab = 'boards';
-    let boards = await Board.find().sort({'created_at': 'desc'});
+
+    const limit = 50;
+
+    let boards = await Board.paginate({}, {limit}) //.sort({'created_at': 'desc'});
+
+    if (request.query.page) {
+    	const page = request.query.page;
+    	boards = await Board.paginate({}, { limit, page })
+    }
 
     if (request.query.search) {
     	const word = request.query.search;
-    	boards = await Board.find(
+    	boards = await Board.paginate(
     		{
     			'title' : new RegExp(word, 'i')
+    		},
+    		{
+    			limit: 50
     		}
     	)
     }

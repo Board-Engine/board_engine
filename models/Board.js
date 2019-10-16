@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 var Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -18,6 +20,8 @@ const schema = new Schema({
     	default: Date.now
     },
 });
+
+schema.plugin(mongoosePaginate);
 
 const Board = mongoose.model('Board', schema);
 
