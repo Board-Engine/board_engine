@@ -9,7 +9,7 @@
                 </div>
                 <div class="col">
                     <form action="#" method="get">
-                        <input type="search" class="form-control" placeholder="Search">
+                        <input type="search" class="form-control" name="search" placeholder="Search">
                     </form>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <tbody>
                     {% for board in boards %}
                         <tr>
-                            <td>{{ board['_id'] }}</td>
+                            <td><a href="/admin/boards/{{ board['_id'] }}">{{ board['_id'] }}</a></td>
                             <td>{{ board.title }}</td>
                             <td>{{ board.description }}</td>
                             <td>{{ board.created_at }}</td>

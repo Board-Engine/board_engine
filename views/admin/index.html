@@ -17,17 +17,15 @@
                         <th>title</th>
                         <th>description</th>
                         <th>created_at</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for board in boards %}
                     <tr>
-                        <td>{{ board.id }}</td>
+                        <td><a href="/admin/boards/{{ board.id }}">{{ board.id }}</a></td>
                         <td>{{ board.title }}</td>
                         <td>{{ board.description }}</td>
                         <td>{{ board.created_at }}</td>
-                        <td><a href="#" class="btn btn-primary btn-block">Edit</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -51,11 +49,10 @@
                 <tbody>
                     {% for thread in threads %}
                     <tr>
-                        <td>{{ thread.id }}</td>
+                        <td><a href="#">{{ thread.id }}</a></td>
                         <td>{{ thread.title }}</td>
                         <td>{{ thread.description }}</td>
                         <td>{{ thread.created_at }}</td>
-                        <td><a href="#" class="btn btn-primary btn-block">Edit</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -70,10 +67,20 @@
                 <thead class="bg-dark text-white">
                     <tr>
                         <th>id</th>
+                        <th>board_id</th>
+                        <th>thread_id</th>
+                        <th>created_at</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    {% for thread in threads %}
+                        <tr>
+                            <td>{{ thread.id }}</td>
+                            <td>{{ thread.board_id }}</td>
+                            <td>{{ thread.thread_id }}</td>
+                            <td>{{ thread.created_at }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
