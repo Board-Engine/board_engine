@@ -1,4 +1,7 @@
+const fs = require('fs');
+const fsPromises = fs.promises;
 const Board = require('../../models/Board');
+const Thread = require('../../models/Thread');
 
 exports.index = async (request, response) => {
     const tab = 'boards';
@@ -59,7 +62,12 @@ exports.update = async (request, response) => {
 exports.destroy = async (request, response) => {
 	const id = await request.params.id;
 	
-	await Board.findByIdAndDelete(id)
+	const board = await Board.findById(id);
+	const dir = await `storage/app/boards/${board.folder}`;
+
+	await fsPromises.rmdir(dir, { recursive: true });
+
+	await board.remove();
 
 	return await response.redirect('/admin/boards');
 };
