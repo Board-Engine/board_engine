@@ -7,6 +7,7 @@ const Helpers = require('./Helpers');
 const redis = require('redis');
 const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
+const config = require('../env');
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();

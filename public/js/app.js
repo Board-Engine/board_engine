@@ -99,6 +99,34 @@
 						}, 3000)
 					}
 				})
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+
+				const message = this_dialog.querySelector('.message');
+
+				if (data) {
+					captcha_confirm = true;
+					message.innerText = 'Success';
+					Helpers.Spam.restartAttempt();
+
+					setTimeout(() => {
+						Helpers.Dialog.close('.dialog_captcha');
+					}, 3000)
+					
+				}
+				else {
+					console.log('no');
+					message.innerText = 'Fail';
+					captcha_confirm = false;
+					Helpers.Spam.failAttempt();
+
+					setTimeout(() => {
+						document.location.reload();
+					}, 3000)
+				}
+			})
 		}
 		else {
 			alert('too much fails')
