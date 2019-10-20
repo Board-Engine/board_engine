@@ -18,7 +18,7 @@
 		Spam: {
 			isAllowed() {
 				const attempt = sessionStorage.getItem('attempt');
-				
+
 				if (attempt === null) {
 					sessionStorage.setItem('attempt', 5);
 				}
@@ -55,6 +55,7 @@
 		event.preventDefault();
 
 		const this_form = event.target;
+		const this_dialog = this_form.closest('dialog');
 
 		const url = '/captcha/confirm';
 
@@ -70,38 +71,38 @@
 				headers: new Headers({ "Content-Type": "application/json" }),
 				body: JSON.stringify(data)
 			})
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
+				.then((response) => {
+					return response.json();
+				})
+				.then((data) => {
 
-				const message = this_form.querySelector('.message');
+					const message = this_dialog.querySelector('.message');
 
-				if (data) {
-					captcha_confirm = true;
-					message.innerText = 'Success';
-					Helpers.Spam.restartAttempt();
+					if (data) {
+						captcha_confirm = true;
+						message.innerText = 'Success';
+						Helpers.Spam.restartAttempt();
 
-					setTimeout(() => {
-						Helpers.Dialog.close('.dialog_captcha');
-					}, 3000)
-					
-				}
-				else {
-					console.log('no');
-					message.innerText = 'Fail';
-					captcha_confirm = false;
-					Helpers.Spam.failAttempt();
+						setTimeout(() => {
+							Helpers.Dialog.close('.dialog_captcha');
+						}, 3000)
 
-					setTimeout(() => {
-						document.location.reload();
-					}, 3000)
-				}
-			})
+					}
+					else {
+						console.log('no');
+						message.innerText = 'Fail';
+						captcha_confirm = false;
+						Helpers.Spam.failAttempt();
+
+						setTimeout(() => {
+							document.location.reload();
+						}, 3000)
+					}
+				})
 		}
 		else {
 			alert('too much fails')
-		}		
+		}
 	});
 
 	// Close
@@ -139,24 +140,24 @@
 				headers: new Headers({ "Content-Type": "application/json" }),
 				body: JSON.stringify(data)
 			})
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
+				.then((response) => {
+					return response.json();
+				})
+				.then((data) => {
 
-				const message = this_form.querySelector('.message');
+					const message = this_form.querySelector('.message');
 
-				if (data) {
+					if (data) {
 
 
 
-					Helpers.Spam.restartAttempt();
+						Helpers.Spam.restartAttempt();
 
-					setTimeout(() => {
-						Helpers.Dialog.close('dialog_captcha');
-					}, 3000)
-				}
-			})
+						setTimeout(() => {
+							Helpers.Dialog.close('dialog_captcha');
+						}, 3000)
+					}
+				})
 		});
 	}
 })();
