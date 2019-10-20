@@ -64,11 +64,14 @@ exports.store = async (request, response) => {
         const board_slug = await request.body.board_slug;
         const content = await request.body.content;
         const author = await request.body.author;
+        let board_id = await Thread.findById(thread_id);
+        board_id = board_id.board_id;
 
         const data = {
             thread_id: ObjectId(thread_id),
             content,
             author,
+            board_id
         };
 
         await Post.create(data);
@@ -81,4 +84,5 @@ exports.store = async (request, response) => {
             return await response.redirect(`/threads/${thread_id}`);
         }
     }
+
 };
