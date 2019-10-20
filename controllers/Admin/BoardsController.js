@@ -1,7 +1,10 @@
 const fs = require('fs');
 const fsPromises = fs.promises;
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const Board = require('../../models/Board');
 const Thread = require('../../models/Thread');
+const Post = require('../../models/Post');
 
 exports.index = async (request, response) => {
     const tab = 'boards';
@@ -52,7 +55,7 @@ exports.update = async (request, response) => {
 	const data = {
 		title: request.body.title,
 		description: request.body.description,
-	}
+	};
 
 	const board = await Board.updateOne({'_id': id}, { $set: data });
 
@@ -68,6 +71,9 @@ exports.destroy = async (request, response) => {
 	await fsPromises.rmdir(dir, { recursive: true });
 
 	await board.remove();
+
+	await Thread.deleteMany({ board_id: ObjectId(id) });
+	await Post.deleteMany({ board_id: ObjectId(id) });
 
 	return await response.redirect('/admin/boards');
 };
