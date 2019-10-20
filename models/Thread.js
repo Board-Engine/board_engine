@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const schema = new Schema({
     title: String,
@@ -29,6 +30,8 @@ const schema = new Schema({
     	default: Date.now
     },
 });
+
+schema.plugin(mongoosePaginate);
 
 const Thread = mongoose.model('Thread', schema);
 
