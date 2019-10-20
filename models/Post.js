@@ -14,6 +14,14 @@ const schema = new Schema({
     		'No thread id found'
     	]
     },
+    board_id: {
+        type: Schema.Types.ObjectID,
+        ref: 'boards',
+        required: [
+            true,
+            'No board id found'
+        ]
+    },
     ip: String,
 
     created_at: {
