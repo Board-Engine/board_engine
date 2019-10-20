@@ -37,5 +37,42 @@ exports.index = async (request, response) => {
 };
 
 exports.edit = async (request, response) => {
+    const tab = await 'threads';
+    const id = await request.params.id;
 
+    const thread = await Thread.findById(id);
+
+    return await response.render('admin/threads/edit.html', {
+        tab,
+        thread
+    });
+};
+
+exports.update = async (request, response) => {
+    const tab = await 'threads';
+    const id = await request.params.id;
+
+    const data = {
+        title: request.body.title,
+        content: request.body.content,
+    };
+
+    const thread = await Thread.updateOne({'_id': id}, { $set: data });
+
+    return await response.redirect(`/admin/threads/${id}`);
+};
+
+exports.destroy = async (request, response) => {
+    const id = await request.params.id;
+
+    const thread = await Thread.findById(id);
+    const dir = await `storage/app/boards/${thread.folder}`;
+
+    await fsPromises.rmdir(dir, { recursive: true });
+
+    await thread.remove();
+
+    await Post.deleteMany({ thread_id: ObjectId(id) });
+
+    return await response.redirect('/admin/threads');
 };

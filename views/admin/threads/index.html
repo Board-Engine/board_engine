@@ -5,7 +5,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <h1>Boards</h1>
+                <h1>Threads</h1>
             </div>
             <div class="col">
                 <form action="#" method="get">
@@ -19,6 +19,7 @@
                 <th>id</th>
                 <th>title</th>
                 <th>description</th>
+                <th>board_id</th>
                 <th>created_at</th>
             </tr>
             </thead>
@@ -28,6 +29,7 @@
                 <td><a href="/admin/threads/{{ thread['_id'] }}">{{ thread['_id'] }}</a></td>
                 <td>{{ thread.title }}</td>
                 <td>{{ thread.description }}</td>
+                <td><a href="/admin/boards/{{ thread.board_id }}">{{ thread.board_id }}</a></td>
                 <td>{{ thread.created_at }}</td>
             </tr>
             {% endfor %}

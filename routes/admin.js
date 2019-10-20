@@ -16,5 +16,8 @@ router.post('/boards/:id', BoardsController.update);
 router.delete('/boards/:id', BoardsController.destroy);
 
 router.get('/threads', ThreadsController.index);
+router.get('/threads/:id', ThreadsController.edit);
+router.post('/threads/:id', ThreadsController.update);
+router.delete('/threads/:id', ThreadsController.destroy);
 
 module.exports = router;
