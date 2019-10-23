@@ -15,18 +15,17 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Description</th>
+                                <th>Title</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for board in boards %}
+                        {% for row in boards %}
                             <tr>
+                                {% for board in row %}
                                 <td>
                                     <a href="/boards/{{ board.slug }}">{{ board.title }}</a>
                                 </td>
-                                <td>
-                                   <a href="/boards/{{ board.slug }}">{{ board.description }}</a>
-                                </td>
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -57,15 +56,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for thread in threads %}
-                            <tr>
-                                <td>
-                                    <a href="/threads/{{ thread.id }}">{{ thread.title }}</a>
-                                </td>
-                                <td>
-                                    <a href="/threads/{{ thread.id }}">{{ thread.content }}</a>
-                                </td>
-                            </tr>
+                            {% for row in threads %}
+                                <tr>
+                                    {% for thread in row %}
+                                    <td>
+                                        <a href="/threads/{{ thread.id }}">{{ thread.title }}</a>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>

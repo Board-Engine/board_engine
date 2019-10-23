@@ -8,6 +8,7 @@ const Post = require('../models/Post');
 const Report = require('../models/Report');
 const config = require('../env');
 const md = require('markdown-it')();
+const Helpers = require('./Helpers');
 const svgCaptcha = require('svg-captcha');
 
 const {promisify} = require('util');
@@ -24,10 +25,16 @@ const CounterMiddleware = require('../middleware/Counter');
 
 
 exports.index = async (request, response) => {
-	
-	CounterMiddleware.handle()
-    const boards = await Board.find().sort({'_id': 'desc'}).limit(10);
-    const threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
+
+	CounterMiddleware.handle();
+
+    let boards = await Board.find().sort({'_id': 'desc'}).limit(40);
+    boards = await Helpers.Array.chunk(boards, 2);
+
+
+    let threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
+    threads = await Helpers.Array.chunk(threads, 2);
+
     const head_title = 'Site';
     const counter = await getAsync('counter');
     const boards_total = await getAsync('boards');
