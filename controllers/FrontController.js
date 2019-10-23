@@ -169,13 +169,16 @@ exports.postCaptchaConfirm = async (request, response) => {
 
 exports.postReport = async (request, response) => {
 	
-	const report = request.body.report
+	const content = request.body.report;
+	const url = request.body.url_report;
 
 	const data = {
-		report
+		content,
+		url
 	}
 
 	await Report.create(data);
+
 
 	return await response.json(true);
 };

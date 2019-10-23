@@ -71,34 +71,34 @@
 				headers: new Headers({ "Content-Type": "application/json" }),
 				body: JSON.stringify(data)
 			})
-				.then((response) => {
-					return response.json();
-				})
-				.then((data) => {
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
 
-					const message = this_dialog.querySelector('.message');
+				const message = this_dialog.querySelector('.message');
 
-					if (data) {
-						captcha_confirm = true;
-						message.innerText = 'Success';
-						Helpers.Spam.restartAttempt();
+				if (data) {
+					captcha_confirm = true;
+					message.innerText = 'Success';
+					Helpers.Spam.restartAttempt();
 
-						setTimeout(() => {
-							Helpers.Dialog.close('.dialog_captcha');
-						}, 3000)
+					setTimeout(() => {
+						Helpers.Dialog.close('.dialog_captcha');
+					}, 3000)
 
-					}
-					else {
-						console.log('no');
-						message.innerText = 'Fail';
-						captcha_confirm = false;
-						Helpers.Spam.failAttempt();
+				}
+				else {
+					console.log('no');
+					message.innerText = 'Fail';
+					captcha_confirm = false;
+					Helpers.Spam.failAttempt();
 
-						setTimeout(() => {
-							document.location.reload();
-						}, 3000)
-					}
-				})
+					setTimeout(() => {
+						document.location.reload();
+					}, 3000)
+				}
+			})
 			.then((response) => {
 				return response.json();
 			})
@@ -153,12 +153,16 @@
 
 		document.querySelector('.dialog_report').querySelector('form').addEventListener('submit', (event) => {
 			event.preventDefault();
-			const this_form = event.target;
 
-			const report = this_form.querySelector('#report').value
+			const this_form = event.target;
+			const this_dialog = this_form.closest('dialog');
+
+			const report = this_form.querySelector('#report').value;
+			const url_report = window.location.href;
 
 			const data = {
-				report
+				report,
+				url_report
 			};
 
 			const url = '/report';
@@ -168,24 +172,22 @@
 				headers: new Headers({ "Content-Type": "application/json" }),
 				body: JSON.stringify(data)
 			})
-				.then((response) => {
-					return response.json();
-				})
-				.then((data) => {
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
 
-					const message = this_form.querySelector('.message');
+				const message = this_dialog.querySelector('.message');
 
-					if (data) {
+				if (data) {
 
+					Helpers.Spam.restartAttempt();
 
-
-						Helpers.Spam.restartAttempt();
-
-						setTimeout(() => {
-							Helpers.Dialog.close('dialog_captcha');
-						}, 3000)
-					}
-				})
+					setTimeout(() => {
+						Helpers.Dialog.close('.dialog_captcha');
+					}, 3000)
+				}
+			})
 		});
 	}
 })();
