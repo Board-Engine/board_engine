@@ -1,22 +1,7 @@
 const User = require('../../models/User');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const argon2 = require('argon2');
 
-passport.use(new LocalStrategy((name, password, done) => {
-    User.findOne({ name }, (error, user) => {
-        if (error) {
-            return done(error)
-        }
-        if (! user) {
-            return done(null, false);
-        }
-        if (! user.verifyPassword(password)) {
-            return done(null, false);
-        }
-        return done(null, user);
-    })
-}));
 
 exports.getLogin = (request, response) => {
     return response.render('front/login.html')
@@ -24,21 +9,21 @@ exports.getLogin = (request, response) => {
 
 exports.postLogin = async (request, response) => {
 
-    const name = request.body.name;
-    let password = request.body.password;
+    const name = await request.body.name;
+    let password = await request.body.password;
 
-    const user = await User.findOne({name})
+    const user = await User.findOne({name});
     if (! user) {
         return response.json('nope')
     }
-    bcrypt.compare(password, user.password, (err, res) => {
-        if (! res) {
-            response.json('nope')
-        }
-        else if (res) {
-            request.session.isLogged = true
 
-            response.json('ok')
-        }
-    })
+    if (! await argon2.verify(user.password, password)) {
+        return response.json('nope')
+    }
+    else {
+        const token = await crypto.randomBytes(128).toString('hex');
+        request.session.token = token;
+
+        return await response.json(token)
+    }
 };

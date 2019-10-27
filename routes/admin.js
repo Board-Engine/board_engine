@@ -6,8 +6,14 @@ const BoardsController = require('../controllers/Admin/BoardsController');
 const ThreadsController = require('../controllers/Admin/ThreadsController');
 const PostsController = require('../controllers/Admin/PostsController');
 
+function isAuthenticated(request, response, next) {
+    console.log('middleware')
+    next()
+}
 
-router.use(methodOverride('_method'))
+router.use(isAuthenticated)
+
+router.use(methodOverride('_method'));
 
 router.get('/', AdminController.index);
 

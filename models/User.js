@@ -1,6 +1,6 @@
-const crypto = require('crypto');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const argon2 = require('argon2');
 
 let schema = new Schema({
     name: String,
@@ -15,9 +15,13 @@ let schema = new Schema({
         default: Date.now
     },
 });
-schema.methods.verifyPassword = (password) => {
-    const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-    return this.password === hash;
+
+schema.methods.generatePassword = async (password) => {
+    this.password = await argon2.hash(password);
+};
+
+schema.methods.verifyPassword = async (password) => {
+    return await argon2.verify(this.password, password);
 };
 
 const User = mongoose.model('User', schema);
