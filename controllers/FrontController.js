@@ -116,6 +116,13 @@ exports.ads = (request, response) => {
 	})
 };
 
+exports.error = (request, response) => {
+	const head_title = 'Error';
+	response.render('front/error.html', {
+		head_title
+	})
+};
+
 exports.captcha = async (request, response) => {
 	const captcha = svgCaptcha.create({
 		color: true,
@@ -171,7 +178,7 @@ exports.postReport = async (request, response) => {
 	await Report.create(data);
 
 	return await response.json(true);
-}
+};
 
 exports.getSearch = async (request, response) => {
 	CounterMiddleware.handle()

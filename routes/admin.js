@@ -5,6 +5,7 @@ const AdminController = require('../controllers/Admin/AdminController');
 const BoardsController = require('../controllers/Admin/BoardsController');
 const ThreadsController = require('../controllers/Admin/ThreadsController');
 const PostsController = require('../controllers/Admin/PostsController');
+const ErrorsController = require('../controllers/Admin/ErrorsController');
 
 router.use(methodOverride('_method'));
 
@@ -28,5 +29,10 @@ router.get('/posts', PostsController.index);
 router.get('/posts/:id', PostsController.edit);
 router.post('/posts/:id', PostsController.update);
 router.delete('/posts/:id', PostsController.destroy);
+
+
+router.get('/errors', ErrorsController.index);
+router.get('/errors/:id', ErrorsController.show);
+router.delete('/errors/:id', ErrorsController.destroy);
 
 module.exports = router;

@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser('toto'));
 app.use(session({
     cookie: { 
-    	maxAge: 60000 ,
+    	maxAge: 15 * 60 * 1000 ,
     	//secure: true,
     	httpOnly: true,
         secure: false

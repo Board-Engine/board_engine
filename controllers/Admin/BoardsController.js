@@ -33,7 +33,7 @@ exports.index = async (request, response) => {
     response.render('admin/boards/index.html', {
         tab,
         boards
-    })
+    });
 };
 
 exports.edit = async (request, response) => {

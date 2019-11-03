@@ -7,6 +7,14 @@ const PostsController = require('../controllers/PostsController');
 const LoginController = require('../controllers/Auth/LoginController');
 const fileUpload = require('express-fileupload');
 
+//const errorsMiddleware = require('../middleware/errors');
+// TODO DEBUG ERROR CATCHER
+function errorsMiddleware(error, request, response, next) {
+	console.log(error.stack);
+	response.status(500).send({"Error" : error.stack});
+}
+router.use(errorsMiddleware);
+
 const session = require('express-session');
 const passport = require('passport')
 require('../config/passport')(passport);
@@ -53,6 +61,8 @@ router.post('/captcha/confirm', FrontController.postCaptchaConfirm);
 router.post('/report', FrontController.postReport);
 
 router.get('/login', LoginController.getLogin);
+
+router.get('/error', FrontController.error);
 
 router.post('/login', passport.authenticate('local', {
 	successRedirect: '/admin',

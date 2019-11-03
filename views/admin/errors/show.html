@@ -1,0 +1,24 @@
+{% extends '../_layout.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md">
+                <h1>Boards</h1>
+                <h2>{{ error.title }}</h2>
+                <h4>{{ error.url }}</h4>
+                <h4>{{ error.ip }}</h4>
+                <h4>{{ error.created_at }}</h4>
+            </div>
+            <div class="col-md-1">
+                <form action="/admin/boards/{{ error.id }}?_method=DELETE" method="POST" enctype="application/x-www-form-urlencoded">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

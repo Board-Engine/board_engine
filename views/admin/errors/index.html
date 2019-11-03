@@ -1,0 +1,58 @@
+{% extends '../_layout.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h1>Erorrs</h1>
+            </div>
+            <div class="col">
+                <form action="#" method="get">
+                    <input type="search" class="form-control" name="search" placeholder="Search">
+                </form>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>url</th>
+                <th>ip</th>
+                <th>created at</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for error in errors.docs %}
+            <tr>
+                <td><a href="/admin/boards/{{ error['_id'] }}">{{ error['_id'] }}</a></td>
+                <td>{{ error.title }}</td>
+                <td>{{ error.url }}</td>
+                <td>{{ error.ip }}</td>
+                <td>{{ error.created_at }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if errors.hasPrevPage %}
+                <li class="page-item"><a class="page-link" href="?page={{ errors.prevPage }}">Previous</a></li>
+                {% endif %}
+
+                {% for i in range(1, boards.totalPages) %}
+                <li class="page-item {{ 'active' if i == errors.page }}"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endfor %}
+
+                {% if boards.hasNextPage %}
+                <li class="page-item"><a class="page-link" href="?page={{ errors.nextPage }}">Next</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        <h5 class="mt-5">Debug</h5>
+        <pre class="bg-dark text-light p-5">{{ errors | dump }}</pre>
+    </div>
+</div>
+{% endblock %}
