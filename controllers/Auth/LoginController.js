@@ -1,4 +1,5 @@
 exports.getLogin = (request, response) => {
+    console.log(`before login: ${request.isAuthenticated()}`)
     return response.render('front/login.html')
 };
 /*

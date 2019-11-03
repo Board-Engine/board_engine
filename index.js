@@ -9,7 +9,8 @@ const config = require('./env');
 const redis = require('redis');
 
 let RedisStore = require('connect-redis')(session)
-let client = redis.createClient()
+let client = redis.createClient();
+const MongoStore = require('connect-mongo')(session)
 
 const mongoose = require('mongoose');
 mongoose.connect(`mongodb://localhost/${config.db.name}`, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
@@ -21,18 +22,23 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 app.use(bodyParser.json());
 app.use(cookieParser('toto'));
 app.use(session({
     cookie: { 
     	maxAge: 60000 ,
-    	secure: true,
+    	//secure: true,
     	httpOnly: true,
+        secure: false
     },
     saveUninitialized: true,
-    store: new RedisStore({ client }),
+    store: new MongoStore({
+        url: `mongodb://localhost/${config.db.name}`,
+        collection: 'sessions'
+    }),
     secret: 'toto',
-    resave: false,
+    resave: true,
 
 }));
 app.use(flash());
