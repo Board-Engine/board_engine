@@ -4,6 +4,6 @@ module.exports = (request, response, next) => {
     }
     else {
         request.flash('error_msg', 'Please log in to view that resource');
-        response.redirect('/t');
+        response.redirect('/login');
     }
 }
