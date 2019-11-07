@@ -222,3 +222,7 @@ section .title {
   position: fixed;
   top: 0;
   left: 0; }
+
+@media screen and (max-width: 992px) {
+  .container {
+    width: 100%; } }

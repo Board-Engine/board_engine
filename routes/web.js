@@ -7,6 +7,7 @@ const PostsController = require('../controllers/PostsController');
 const LoginController = require('../controllers/Auth/LoginController');
 const fileUpload = require('express-fileupload');
 
+
 //const errorsMiddleware = require('../middleware/errors');
 // TODO DEBUG ERROR CATCHER
 function errorsMiddleware(error, request, response, next) {
@@ -20,6 +21,9 @@ const passport = require('passport')
 require('../config/passport')(passport);
 router.use(passport.initialize());
 router.use(passport.session());
+
+const BansMiddleware = require('../middleware/bans');
+
 
 router.use(fileUpload({
 	limits: {
@@ -35,7 +39,7 @@ router.get('/boards', BoardsController.index);
 router.get('/boards/create', BoardsController.create);
 router.post('/boards', BoardsController.store);
 
-router.get('/boards/:board_slug', ThreadsController.index);
+router.get('/boards/:board_slug', BansMiddleware, ThreadsController.index);
 router.get('/boards/:board_slug/:board_id/create', ThreadsController.create);
 router.post('/boards/:board_slug/:board_id/create', ThreadsController.store);
 

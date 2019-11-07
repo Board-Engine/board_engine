@@ -101,3 +101,16 @@ section {
 	top: 0;
 	left: 0;
 }
+
+@media screen and (max-width: 992px) {
+	header {
+
+		nav {
+			//background: red;
+		}
+	}
+
+	.container {
+		width: 100%;
+	}
+}
