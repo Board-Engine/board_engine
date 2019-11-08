@@ -80,7 +80,7 @@ exports.store = async (request, response) => {
         ip
     };
 
-    await fsPromises.mkdir(`storage/app/boards/${folder}`, {recursive: true})
+    await fsPromises.mkdir(`storage/app/boards/${folder}`, {recursive: true});
 
     await image.mv(`storage/app/boards/${folder}/${name}`);
     const board = await Board.create(data);

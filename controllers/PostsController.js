@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 var ObjectId = require('mongoose').Types.ObjectId;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
@@ -6,6 +7,8 @@ const Helpers = require('./Helpers');
 const redis = require('redis');
 const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
+const fs = require('fs');
+const fsPromises = fs.promises;
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();
@@ -74,6 +77,36 @@ exports.store = async (request, response) => {
             board_id
         };
 
+        if (request.files.image) {
+
+            const limit = 1000 * 1000;
+
+            if (request.files.image.size > limit) {
+                return response.status(400).send('File too large. Not more 1 Mo');
+            }
+
+            const ip = await request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+            const hash = await crypto.createHash('sha256').update(ip).digest('hex');
+            data.ip = ip;
+
+            const image = await request.files.image;
+
+            const folder = await request.body.thread_folder;
+
+            const name = await image.name;
+            await response.json(name)
+
+            /*
+            await image.mv(`storage/app/boards/${folder}/${name}`);
+
+
+            const image_path = `/images/${thread.folder}.`;
+
+            data.image = image_path;
+
+             */
+        }
+        /*
         await Post.create(data);
         client.incr('posts');
 
@@ -83,6 +116,10 @@ exports.store = async (request, response) => {
         else {
             return await response.redirect(`/threads/${thread_id}`);
         }
+
+         */
     }
+
+
 
 };

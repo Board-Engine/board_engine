@@ -6,6 +6,7 @@ const schema = new Schema({
     author: String,
     image: String,
     content: String,
+    ip: String,
     thread_id: {
     	type: Schema.Types.ObjectId,
     	ref: 'threads',
@@ -22,8 +23,6 @@ const schema = new Schema({
             'No board id found'
         ]
     },
-    ip: String,
-
     created_at: {
     	type: Date,
     	default: Date.now
@@ -37,7 +36,7 @@ const schema = new Schema({
 schema.method('sayHello', () => {
     console.log('ok')
     return 'okok'
-})
+});
 
 const Post = mongoose.model('Post', schema);
 
