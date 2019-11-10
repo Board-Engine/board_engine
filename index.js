@@ -8,9 +8,9 @@ const sessionStore = new session.MemoryStore;
 const config = require('./env');
 const redis = require('redis');
 
-let RedisStore = require('connect-redis')(session)
+let RedisStore = require('connect-redis')(session);
 let client = redis.createClient();
-const MongoStore = require('connect-mongo')(session)
+const MongoStore = require('connect-mongo')(session);
 
 const mongoose = require('mongoose');
 mongoose.connect(`mongodb://localhost/${config.db.name}`, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
