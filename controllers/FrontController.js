@@ -6,6 +6,7 @@ const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
 const Report = require('../models/Report');
+const Session = require('../models/Session');
 const config = require('../env');
 const md = require('markdown-it')();
 const Helpers = require('./Helpers');
@@ -143,25 +144,24 @@ exports.captcha = async (request, response) => {
 
 	request.session.captcha = captcha.text;
 	request.session.save(() => {
-		console.log('saved')
+		console.log('saved');
+		console.log(request.session);
+		response.type('svg');
+		response.status(200).send(captcha.data);
 	})
-	console.log(request.session)
-
-	response.type('svg');
-	response.status(200).send(captcha.data);
 };
 
 exports.postCaptchaConfirm = async (request, response) => {
-	const sess = await keysAsync('sess:*')
-	if (! sess.length) {
-		console.log('sess empty')
+	const sessions = await Session.find();
+	if (! sessions.length) {
+		console.log('sessions empty')
 		return response.status(202).send(false)
 	}
 
 	const captcha_input = await request.body.captcha;
 
-	for (s of sess) {
-		let cookie = await getAsync(s);
+	for (session of sessions) {
+		let cookie = await session.session;
 		cookie = await JSON.parse(cookie);
 		const captcha = await cookie.captcha;
 
@@ -182,10 +182,9 @@ exports.postReport = async (request, response) => {
 	const data = {
 		content,
 		url
-	}
+	};
 
 	await Report.create(data);
-
 
 	return await response.json(true);
 };
@@ -241,16 +240,24 @@ exports.getSearch = async (request, response) => {
 };
 
 exports.test = async (request, response) => {
-	/*
-	let date = 'Mon Sep 16 2019 17:01:05 GMT+0200 (Central European Summer Time)';
-	date = new Date(date);
+	const sessions = await Session.find();
+	if (! sessions.length) {
+		console.log('sessions empty')
+		return response.status(202).send(false)
+	}
 
-	const year = date.getFullYear();
-	const month = date.getMonth();
-	const day = date.getDay();
+	const captcha_input = await request.body.captcha;
 
-	const format = `${day}/${month}/${year}`;
+	for (session of sessions) {
+		let cookie = await session.session;
+		cookie = await JSON.parse(cookie);
+		const captcha = await cookie.captcha;
 
-	response.send(format)
-	*/
+		if (captcha_input === captcha) {
+			console.log('captcha is ok')
+			return response.status(202).send(true);
+		}
+	}
+
+	return response.status(202).send(false);
 };
