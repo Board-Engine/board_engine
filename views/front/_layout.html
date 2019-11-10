@@ -11,15 +11,15 @@
 	<body>
 		<header>
 			{% set color =  ['#f00', '#0f0', '#0ff', '#ff0', '#F0F'] | random %}
-			<div class="logo-space">
-				<!--
-				<a href="/" style="font-size: 2rem; color: {{ color }}">HOME</a>
-				 -->
-				<a href="/">
-					<img src="/images/logo.svg" alt="logo">
-				</a>
-			</div>
 			<nav>
+				<div class="logo-space">
+					<!--
+                    <a href="/" style="font-size: 2rem; color: {{ color }}">HOME</a>
+                     -->
+					<a href="/">
+						<img src="/images/logo.svg" alt="logo">
+					</a>
+				</div>
 				<ul>
 					<li><a href="/search">Search</a></li>
 					<li><a href="/boards">Boards</a></li>
@@ -33,6 +33,7 @@
 			{% block content %}
 			{% endblock %}
 		</main>
+
 		<footer>
 			<div class="col">
 				<ul>
@@ -45,10 +46,7 @@
 				</ul>
 			</div>
 			<div class="col">
-
-			</div>
-			<div class="col">
-
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci distinctio dolorem excepturi optio quisquam ut voluptate voluptatum. Ad adipisci animi dolorem ipsum, mollitia saepe. Deleniti ea placeat quibusdam rerum soluta!
 			</div>
 			<div class="col"></div>
 			{% block js %}

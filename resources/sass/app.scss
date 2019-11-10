@@ -31,9 +31,12 @@ header {
 	background: #212529;;
 	justify-content: space-between;
 	padding: .6rem;
+	width: 100%;
 
 	nav {
 		display: flex;
+		justify-content: space-between;
+		width: 100%;
 
 		ul {
 			display: flex;
@@ -104,9 +107,20 @@ section {
 
 @media screen and (max-width: 992px) {
 	header {
+		width: 100%;
+		
+		.logo-space {
+			text-align: center;
+		}
 
 		nav {
 			//background: red;
+			width: 100%;
+			flex-direction: column;
+
+			ul {
+				flex-direction: column;
+			}
 		}
 	}
 
