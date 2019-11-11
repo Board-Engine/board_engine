@@ -175,12 +175,12 @@ header {
   display: flex;
   background: #212529;
   justify-content: space-between;
-  padding: .6rem;
   width: 100%; }
   header nav {
     display: flex;
     justify-content: space-between;
-    width: 100%; }
+    width: 100%;
+    padding: .6rem; }
     header nav ul {
       display: flex;
       align-items: center;

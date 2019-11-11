@@ -187,7 +187,7 @@
 						Helpers.Dialog.close('.dialog_captcha');
 					}, 3000)
 				}
-			})
+			});
 		});
 	}
 })();
