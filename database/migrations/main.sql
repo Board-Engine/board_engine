@@ -11,7 +11,7 @@
 *
 --------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS users(
-	id INT NOT NULL PRIMARY KEY
+    id  SERIAL PRIMARY KEY
 );
 ALTER TABLE users ADD COLUMN IF NOT EXISTS name VARCHAR(50);
 ALTER TABLE users ADD COLUMN IF NOT EXISTS password VARCHAR(255);
@@ -25,7 +25,7 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS password VARCHAR(255);
 *
 --------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS boards(
-	id INT NOT NULL PRIMARY KEY
+    id  SERIAL PRIMARY KEY
 );
 
 ALTER TABLE boards ADD COLUMN IF NOT EXISTS title VARCHAR(150);
@@ -47,7 +47,7 @@ ALTER TABLE boards ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DATE
 *
 --------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS threads(
-	id INT NOT NULL PRIMARY KEY
+    id  SERIAL PRIMARY KEY
 );
 
 ALTER TABLE threads ADD COLUMN IF NOT EXISTS title VARCHAR(150);
@@ -75,7 +75,7 @@ ALTER TABLE threads ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DAT
 *
 --------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS posts(
-	id INT NOT NULL PRIMARY KEY
+    id  SERIAL PRIMARY KEY
 );
 
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS title VARCHAR(150);
@@ -84,7 +84,7 @@ ALTER TABLE posts ADD COLUMN IF NOT EXISTS content VARCHAR(255);
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS folder VARCHAR(150);
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS avatar VARCHAR(150);
 
-ALTER  TABLE posts ADD COLUMN IF NOT EXISTS board_id INT NOT NULL;
+ALTER TABLE posts ADD COLUMN IF NOT EXISTS board_id INT NOT NULL;
 ALTER TABLE posts DROP CONSTRAINT IF EXISTS board_id;
 ALTER TABLE posts ADD CONSTRAINT board_id FOREIGN KEY (board_id) REFERENCES boards (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -102,7 +102,7 @@ ALTER TABLE posts ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DATE;
 *
 --------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS ip_ban(
-	id INT NOT NULL PRIMARY KEY
+    id  SERIAL PRIMARY KEY
 );
 ALTER TABLE ip_ban ADD COLUMN IF NOT EXISTS ip VARCHAR(25);
 ALTER TABLE ip_ban ADD COLUMN IF NOT EXISTS reason VARCHAR(25);
