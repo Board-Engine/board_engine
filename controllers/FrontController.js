@@ -240,24 +240,9 @@ exports.getSearch = async (request, response) => {
 };
 
 exports.test = async (request, response) => {
-	const sessions = await Session.find();
-	if (! sessions.length) {
-		console.log('sessions empty')
-		return response.status(202).send(false)
-	}
 
-	const captcha_input = await request.body.captcha;
 
-	for (session of sessions) {
-		let cookie = await session.session;
-		cookie = await JSON.parse(cookie);
-		const captcha = await cookie.captcha;
-
-		if (captcha_input === captcha) {
-			console.log('captcha is ok')
-			return response.status(202).send(true);
-		}
-	}
-
-	return response.status(202).send(false);
+	await Board.findAll().then(boards => {
+		response.json(boards)
+	});
 };
