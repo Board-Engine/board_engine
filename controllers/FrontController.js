@@ -29,9 +29,14 @@ exports.index = async (request, response) => {
 
 	CounterMiddleware.handle();
 
-    let boards = await Board.find().sort({'_id': 'desc'}).limit(40);
-    boards = await Helpers.Array.chunk(boards, 2);
+    let boards = await Board.findAll({
+		limit: 40,
+		order: [
+			['id', 'desc']
+		]
+    });
 
+    boards = await Helpers.Array.chunk(boards, 2);
 
     let threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
     threads = await Helpers.Array.chunk(threads, 2);
