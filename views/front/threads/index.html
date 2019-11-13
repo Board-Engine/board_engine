@@ -1,7 +1,6 @@
 {% extends '../_layout.html' %}
 
 {% block content %}
-
 	<div class="text-center" style="margin: 1rem;">
 		<h1 data-id="{{ board['_id'] }}">Boards {{ board.title }}</h1>
 
@@ -11,7 +10,7 @@
 		</picture>
 
 		<div>
-		    <a href="/boards/{{ board.slug }}/{{ board['_id'] }}/create" class="button">Create thread</a>
+		    <a href="/boards/{{ board.slug }}/{{ board.id }}/create" class="button">Create thread</a>
 		</div>
 	</div>
 	<div class="wrapper">

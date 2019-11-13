@@ -23,7 +23,7 @@
                             <tr>
                                 {% for board in row %}
                                 <td>
-                                    <a href="/boards/{{ board.slug }}">{{ board.title }}</a>
+                                    <a href="/boards/{{ board.slug }}?board_id={{ board.id }}">{{ board.title }}</a>
                                 </td>
                                 {% endfor %}
                             </tr>
