@@ -13,62 +13,53 @@ const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();
+    const id = await request.query.board_id;
+    let view = '';
+    let head_title = '';
+
+    // paginate ---------------
+    const total = 100;
+
+    const limit = 100;
+    let offset = 0;
+    let paginates = await total / limit;
+    paginates = await Math.floor(paginates);
+
+    if (request.query.page) {
+        const page = request.query.page;
+        offset = page * limit;
+    }
+    // end paginate -------------
+
+    const board = await Board.findOne({
+        where:{ id },
+        include:[
+            {
+                model:Thread,
+                as:'threads',
+                required:false,
+                offset,
+                limit
+            }
+        ],
+    });
+
+    let data = {
+        head_title,
+        paginates
+    };
+
     if (request.params.board_slug) {
-        // get threads by board slug
-        const board_slug = request.params.board_slug;
-
-        let board = await Board.findOne({ slug: board_slug });
-        const head_title = board.title;
-
-        board = await Board.aggregate([ 
-            { 
-                $lookup: { 
-                    from: 'threads', 
-                    localField: '_id', 
-                    foreignField: 'board_id', 
-                    as: 'threads' 
-                }, 
-            },
-            {
-                $match: {
-                    '_id': ObjectId(board.id)
-                }
-            },
-
-            {
-                $limit: 1
-            }    
-        ]);
-
-        board = await board[0];
-
-        return await response.render('front/threads/index.html', {
-            board,
-            head_title
-        });
+        data.head_title = board.title;
+        view = 'front/threads/index.html';
+        data.board = board;
     }
     else {
         // get all threads
-        const limit = 100;
-        let skip = 0;
-        if (request.query.page) {
-            const page = request.query.page;
-            skip = page * limit;
-        }
-        const threads = await Thread.find().skip(skip).limit(limit);
-        const total = await Thread.estimatedDocumentCount();
-        let paginates = await total / limit;
-        paginates = await Math.floor(paginates)
-
-        const head_title = 'Threads';
-
-        return await response.render('front/threads/table.html', {
-            threads,
-            head_title,
-            paginates
-        });
+        data.head_title = 'Threads';
+        view = 'front/threads/table.html';
     }
-
+    return await response.render(view, data)
 };
 
 exports.create = async (request, response) => {

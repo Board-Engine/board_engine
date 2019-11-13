@@ -8,27 +8,36 @@ const redis = require('redis');
 const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
 const config = require('../env');
+const sequelize = require('sequelize');
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();
+
+    const head_title = 'Boards';
+
     const limit = 100;
-    let skip = 0;
+    let offset = 0;
     if (request.query.page) {
         const page = request.query.page;
-        skip = page * limit;
+        offset = page * limit;
     }
+    const boards = await Board.findAll({
+        order: [
+            ['id', 'desc']
+        ],
+        limit,
+        offset
+    });
+    const total = await Board.count();
 
-    const boards = await Board.find().sort({'_id': 'desc'}).skip(skip).limit(limit);
-    const total = await Board.estimatedDocumentCount();
     let paginates = await total / limit;
-    paginates = await Math.floor(paginates)
-    const head_title = 'Boards';
+    paginates = await Math.floor(paginates);
 
     return await response.render('front/boards/index.html', {
         boards,
         head_title,
         paginates
-    })
+    });
 };
 
 exports.create = (request, response) => {
@@ -59,7 +68,6 @@ exports.store = async (request, response) => {
 
     const ip = crypto.createHmac('sha256', (request.headers['x-forwarded-for'] || request.connection.remoteAddress)).update(config.app.crypto.update).digest('hex');
 
-
     const folder = await crypto.randomBytes(12).toString('hex');
 
     const image = await request.files.image;
@@ -84,20 +92,30 @@ exports.store = async (request, response) => {
 
     await image.mv(`storage/app/boards/${folder}/${name}`);
     const board = await Board.create(data);
-    client.incr('boards');
+    await client.incr('boards');
 
     return await response.redirect(`/boards/${board.slug}`);
-
 };
 
 exports.show = async (request, response) => {
-    CounterMiddleware.handle();
-    const slug = request.params.slug;
-    const board = await Board.findOne({ slug });
-    const head_title = board.title;
+    //response.json('slug')
+   // CounterMiddleware.handle();
 
+    //const slug = request.params.slug;
+    /*
+    const board = await Board.findOne({
+        where: {
+            slug
+        }
+    });
+    const head_title = board.title;
+     */
+
+    /*
     return response.render('front/boards/show.html', {
         board,
         head_title
-    })
+    });
+
+     */
 };

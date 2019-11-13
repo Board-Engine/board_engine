@@ -28,9 +28,10 @@ const CounterMiddleware = require('../middleware/Counter');
 exports.index = async (request, response) => {
 
 	CounterMiddleware.handle();
+	const limit = 40
 
     let boards = await Board.findAll({
-		limit: 40,
+		limit,
 		order: [
 			['id', 'desc']
 		]
@@ -38,7 +39,13 @@ exports.index = async (request, response) => {
 
     boards = await Helpers.Array.chunk(boards, 2);
 
-    let threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
+  //  let threads = await Thread.find().sort({'_id': 'desc'}).limit(10);
+    let threads = await Thread.findAll({
+		order: [
+			['id', 'desc'],
+		],
+		limit,
+	});
     threads = await Helpers.Array.chunk(threads, 2);
 
     const head_title = 'Site';
