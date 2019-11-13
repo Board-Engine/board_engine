@@ -4,6 +4,9 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
     host: 'localhost',
     dialect: 'postgres'
 });
+
+const Thread = require('./Thread')
+
 const Board = sequelize.define('board', {
     id: {
         type: Sequelize.INTEGER,
@@ -38,35 +41,9 @@ const Board = sequelize.define('board', {
     modelName: 'Board'
 });
 
-module.exports = Board;
-/*
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
-
-var Schema = mongoose.Schema;
-
-const schema = new Schema({
-    title: String,
-    slug: String,
-    description: String,
-    folder: String,
-    image_path: String,
-    ip: String,
-
-    created_at: {
-    	type: Date,
-    	default: Date.now
-    },
-    updated_at: {
-    	type: Date,
-    	default: Date.now
-    },
+Board.hasMany(Thread, {
+    foreignKey: 'board_id',
+    foreignKeyConstraint: true
 });
 
-schema.plugin(mongoosePaginate);
-
-const Board = mongoose.model('Board', schema);
-
 module.exports = Board;
-
- */
