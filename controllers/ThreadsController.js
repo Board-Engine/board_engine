@@ -13,7 +13,7 @@ const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();
-    const id = await request.query.board_id;
+
     let view = '';
     let head_title = '';
 
@@ -31,18 +31,7 @@ exports.index = async (request, response) => {
     }
     // end paginate -------------
 
-    const board = await Board.findOne({
-        where:{ id },
-        include:[
-            {
-                model:Thread,
-                as:'threads',
-                required:false,
-                offset,
-                limit
-            }
-        ],
-    });
+
 
     let data = {
         head_title,
@@ -50,6 +39,21 @@ exports.index = async (request, response) => {
     };
 
     if (request.params.board_slug) {
+
+        const id = await request.query.board_id;
+        const board = await Board.findOne({
+            where:{ id },
+            include:[
+                {
+                    model:Thread,
+                    as:'threads',
+                    required:false,
+                    offset,
+                    limit
+                }
+            ],
+        });
+
         data.head_title = board.title;
         view = 'front/threads/index.html';
         data.board = board;
@@ -58,18 +62,28 @@ exports.index = async (request, response) => {
         // get all threads
         data.head_title = 'Threads';
         view = 'front/threads/table.html';
+
+        const threads = await Thread.findAll({
+            offset,
+            limit
+        });
+
+        data.threads = threads
     }
     return await response.render(view, data)
 };
 
 exports.create = async (request, response) => {
-    const slug = await request.params.board_slug;
-    const board = await Board.findOne({ slug });
+    const board_id = await request.params.board_id;
 
+    const board = await Board.findOne({ where: {
+            id: board_id
+        }
+    });
 
     return await response.render('front/threads/create.html', {
         board
-    })
+    });
 };
 
 exports.store = async (request, response) => {
@@ -91,11 +105,12 @@ exports.store = async (request, response) => {
         return response.status(400).send('File too large. Not more 1 Mo');
     }
 
-    const id = await request.body.id;
-    const board = await Board.findById(id);
+    const board_id = await request.params.board_id;
+    const board = await Board.findOne({ where: {
+            id: board_id
+        }
+    });
     const folder = await board.folder;
-
-    const board_id = await ObjectId(id);
 
     const title = await request.body.title;
     const slug = await request.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
@@ -109,6 +124,7 @@ exports.store = async (request, response) => {
         folder,
     };
 
+
     // Image
     const image = await request.files.image;
     const name = await image.name;
@@ -119,10 +135,9 @@ exports.store = async (request, response) => {
 
     const thread = await Thread.create(data);
 
-    const slugRedirect = await request.body.slug;
+    const slugRedirect = await board.slug;
 
     client.incr('threads');
 
-    return await response.redirect(`/boards/${slugRedirect}`);
-
+    return await response.redirect(`/boards/${slugRedirect}?board_id=${board_id}`);
 };
