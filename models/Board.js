@@ -5,7 +5,8 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
     dialect: 'postgres'
 });
 
-const Thread = require('./Thread')
+const Thread = require('./Thread');
+const Post = require('./Post');
 
 const Board = sequelize.define('board', {
     id: {
@@ -42,6 +43,11 @@ const Board = sequelize.define('board', {
 });
 
 Board.hasMany(Thread, {
+    foreignKey: 'board_id',
+    foreignKeyConstraint: true
+});
+
+Board.hasMany(Post, {
     foreignKey: 'board_id',
     foreignKeyConstraint: true
 });

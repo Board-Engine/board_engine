@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-var ObjectId = require('mongoose').Types.ObjectId;
+
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
@@ -12,33 +12,25 @@ const fsPromises = fs.promises;
 
 exports.index = async (request, response) => {
     CounterMiddleware.handle();
-    const board_slug = await request.params.board_slug;
     const thread_id = await request.params.thread_id;
+    const board_slug = await request.params.board_slug;
 
-    let thread = await Thread.findById(thread_id);
-    const head_title = thread.title;
 
-    thread = await Thread.aggregate([
-        { 
-            $lookup: { 
-                from: 'posts', 
-                localField: '_id', 
-                foreignField: 'thread_id', 
-                as: 'posts'
-            }, 
+    const thread = await Thread.findOne({
+        where: {
+            id: thread_id
         },
-        {
-            $match: {
-                '_id': ObjectId(thread.id)
+        include: [
+            {
+                model: Post,
+                as: 'posts',
+                required: false,
+                //offset,
+                //limit
             }
-        },
-        {
-            $limit: 1
-        }  
-    ]);
-
-    thread = await thread[0]
-    
+        ]
+    });
+    const head_title = thread.title;
 
     return await response.render('front/posts/index.html', {
         thread,

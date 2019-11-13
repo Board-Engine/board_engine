@@ -1,43 +1,57 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const config = require('../env');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, {
+    host: 'localhost',
+    dialect: 'postgres'
+});
 
-const schema = new Schema({
-    author: String,
-    image: String,
-    content: String,
-    ip: String,
-    thread_id: {
-    	type: Schema.Types.ObjectId,
-    	ref: 'threads',
-    	required: [
-    		true,
-    		'No thread id found'
-    	]
+const Board = require('./Board');
+const Thread = require('./Thread');
+
+const Post = sequelize.define('post', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    author: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    content: {
+        type: Sequelize.STRING,
+    },
+    folder: {
+        type: Sequelize.STRING,
+    },
+    image_path: {
+        type: Sequelize.STRING,
+    },
+    ip: {
+        type: Sequelize.STRING,
     },
     board_id: {
-        type: Schema.Types.ObjectID,
-        ref: 'boards',
-        required: [
-            true,
-            'No board id found'
-        ]
+        type: Sequelize.INTEGER,
+        references: 'boards',
+        referencesKey: 'id',
     },
-    created_at: {
-    	type: Date,
-    	default: Date.now
+    thread_id: {
+        type: Sequelize.INTEGER,
+        references: 'threads',
+        referencesKey: 'id',
     },
-    updated_at: {
-    	type: Date,
-    	default: Date.now
-    },
-});
 
-schema.method('sayHello', () => {
-    console.log('ok')
-    return 'okok'
+    createdAt: {type: Sequelize.DATE, field: 'created_at'},
+    updatedAt: {type: Sequelize.DATE, field: 'updated_at'},
+}, {
+    sequelize,
+    modelName: 'Post'
 });
-
-const Post = mongoose.model('Post', schema);
 
 module.exports = Post;
+
+
