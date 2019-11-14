@@ -15,8 +15,8 @@
                 <tbody>
                     {% for thread in threads %}
                         <tr>
-                            <td><a href="/threads/{{ thread['_id'] }}">{{ thread.title }}</a></td>
-                            <td><a href="/threads/{{ thread['_id'] }}">{{ thread.content }}</a></td>
+                            <td><a href="/threads/{{ thread.id }}">{{ thread.title }}</a></td>
+                            <td><a href="/threads/{{ thread.id }}">{{ thread.content }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
