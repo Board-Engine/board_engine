@@ -31,6 +31,9 @@ const Thread = sequelize.define('thread', {
     avatar: {
         type: Sequelize.STRING,
     },
+    image: {
+        type: Sequelize.STRING,
+    },
     image_path: {
         type: Sequelize.STRING,
     },

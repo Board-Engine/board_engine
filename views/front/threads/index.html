@@ -2,7 +2,7 @@
 
 {% block content %}
 	<div class="text-center" style="margin: 1rem;">
-		<h1 data-id="{{ board['_id'] }}">Boards {{ board.title }}</h1>
+		<h1>Boards {{ board.title }}</h1>
 
 		<picture>
 			<source srcset="/images/{{ board.image_path }}">
@@ -13,16 +13,17 @@
 		    <a href="/boards/{{ board.slug }}/{{ board.id }}/create" class="button">Create thread</a>
 		</div>
 	</div>
+
 	<div class="wrapper">
 		{% for thread in board.threads %}
 			<div class="card preview">
 				<div class="card-image">
-					<a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">
+					<a href="/boards/{{ board.slug }}/{{ thread.id }}">
 						<img src="/images/{{ thread.image_path }}" alt="image board" style="max-width: 100%;">
 					</a>
 				</div>
 				<div class="card-body">
-					<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread['_id'] }}">{{ thread.title }}</a></h3>
+					<h3 class="preview-title"><a href="/boards/{{ board.slug }}/{{ thread.id }}">{{ thread.title }}</a></h3>
 				</div>
 			</div>
 		{% endfor %}

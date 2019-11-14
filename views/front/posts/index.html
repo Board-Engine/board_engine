@@ -83,7 +83,7 @@
             <h2 class="title">Add post</h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="/posts/{{ thread['_id'] }}" class="post" method="post" enctype="multipart/form-data">
+                    <form action="/posts/{{ thread.id }}" class="post" method="post" enctype="multipart/form-data">
 
                         <input type="hidden" name="board_slug" value="{{ board_slug }}" readonly>
                         <input type="hidden" name="thread_folder" value="{{ thread.folder }}" readonly>
