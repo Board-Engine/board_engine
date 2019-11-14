@@ -31,8 +31,6 @@ exports.index = async (request, response) => {
     }
     // end paginate -------------
 
-
-
     let data = {
         head_title,
         paginates
