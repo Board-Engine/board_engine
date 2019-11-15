@@ -237,6 +237,7 @@ section .title {
       width: 100%;
       flex-direction: column; }
       header nav ul {
-        flex-direction: column; }
+        flex-direction: column;
+        padding: 0; }
   .container {
     width: 100%; } }
