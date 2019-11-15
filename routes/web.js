@@ -4,6 +4,7 @@ const FrontController = require('../controllers/FrontController');
 const BoardsController = require('../controllers/BoardsController');
 const ThreadsController = require('../controllers/ThreadsController');
 const PostsController = require('../controllers/PostsController');
+const CaptchaController = require('../controllers/CaptchaController');
 const LoginController = require('../controllers/Auth/LoginController');
 const fileUpload = require('express-fileupload');
 
@@ -59,8 +60,8 @@ router.get('/ads', FrontController.ads);
 
 router.get('/support', FrontController.support);
 
-router.get('/captcha', FrontController.captcha);
-router.post('/captcha/confirm', FrontController.postCaptchaConfirm);
+router.get('/captcha', CaptchaController.captcha);
+router.post('/captcha/confirm', CaptchaController.postCaptchaConfirm);
 
 router.post('/report', FrontController.postReport);
 
