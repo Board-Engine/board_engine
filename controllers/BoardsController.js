@@ -94,7 +94,7 @@ exports.store = async (request, response) => {
     const board = await Board.create(data);
     await client.incr('boards');
 
-    return await response.redirect(`/boards/${board.slug}`);
+    return await response.redirect(`/boards/${board.slug}?board_id=${board.id}`);
 };
 
 exports.show = async (request, response) => {
