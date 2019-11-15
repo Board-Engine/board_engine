@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(cookieParser('toto'));
+/*
 app.use(session({
     cookie: { 
     	maxAge: 15 * 60 * 1000 ,
@@ -38,11 +39,22 @@ app.use(session({
         collection: 'sessions'
     }),
     secret: 'toto',
-    resave: true,
+    resave: false,
 
 }));
-app.use(flash());
 
+ */
+
+
+app.use(session({
+    secret: 'toto',
+    // create new redis store.
+    store: new RedisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+    saveUninitialized: false,
+    resave: false
+}));
+
+app.use(flash());
 
 const nunjucks = require('nunjucks');
 

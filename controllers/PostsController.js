@@ -14,7 +14,10 @@ exports.index = async (request, response) => {
 
     CounterMiddleware.handle();
     const thread_id = await request.params.thread_id;
-    const board_slug = await request.params.board_slug;
+    const board_slug = await request.params.board_slug
+    console.log('-------------- postsController')
+    console.log(request.session)
+    console.log('-------------- /postsController')
 
 
     const thread = await Thread.findOne({

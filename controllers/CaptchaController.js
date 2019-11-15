@@ -1,5 +1,10 @@
 const Session = require('../models/Session');
 const svgCaptcha = require('svg-captcha');
+const redis = require('redis');
+let client = redis.createClient();
+const {promisify} = require('util');
+const getAsync = promisify(client.get).bind(client);
+const keysAsync = promisify(client.keys).bind(client);
 
 exports.captcha = async (request, response) => {
     const captcha = svgCaptcha.create({
@@ -10,35 +15,26 @@ exports.captcha = async (request, response) => {
         height: 100,
     });
 
-    const captcha_text = captcha.text;
-
-    request.session.captcha = captcha.text;
-    request.session.save(() => {
-        console.log('saved');
-        console.log(request.session.captcha);
-        response.type('svg');
-        response.status(200).send(captcha.data);
-    })
+    //request.session.captcha = captcha.text;
+    let session_id = await request.sessionID;
+    session_id = `captcha:${session_id}`;
+    await client.set(session_id, captcha.text);
+    await client.expire(session_id, 1000)
+    await response.type('svg');
+    await response.status(200).send(captcha.data);
 };
 
 exports.postCaptchaConfirm = async (request, response) => {
-    const sessions = await Session.find();
-    if (! sessions.length) {
-        console.log('sessions empty');
-        return response.status(202).send(false)
-    }
+
+    let session_id = await request.sessionID;
+    session_id = `captcha:${session_id}`;
 
     const captcha_input = await request.body.captcha;
 
-    for (session of sessions) {
-        let cookie = await session.session;
-        cookie = await JSON.parse(cookie);
-        const captcha = await cookie.captcha;
+    const captcha_stored = await getAsync(session_id);
 
-        if (captcha_input === captcha) {
-            console.log('captcha is validated SUCCESSFULLY');
-            return response.status(202).send(true);
-        }
+    if (captcha_input === captcha_stored) {
+        return response.status(202).send(true);
     }
 
     return response.status(202).send(false);

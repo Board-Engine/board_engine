@@ -209,9 +209,12 @@ exports.getSearch = async (request, response) => {
 };
 
 exports.test = async (request, response) => {
-
-
-	await Board.findAll().then(boards => {
-		response.json(boards)
-	});
+	const sessions = await keysAsync('sess*');
+	for (session of sessions) {
+		let captcha = await getAsync(session)
+		captcha = JSON.parse(captcha);
+		captcha = captcha.captcha;
+		console.log(captcha);
+	}
+	response.json(sessions)
 };
