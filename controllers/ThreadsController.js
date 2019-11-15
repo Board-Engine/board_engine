@@ -1,18 +1,17 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const fsPromises = fs.promises;
-const mongoose = require('mongoose');
+
 const Thread = require('../models/Thread');
 const Board = require('../models/Board');
 const Helpers = require('./Helpers');
 const Post = require('../models/Post');
-const ObjectId = mongoose.Types.ObjectId;
+
 const redis = require('redis');
 const client = redis.createClient();
 const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
-    CounterMiddleware.handle();
 
     let view = '';
     let head_title = '';

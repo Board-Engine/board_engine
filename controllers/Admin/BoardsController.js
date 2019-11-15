@@ -1,7 +1,5 @@
 const fs = require('fs');
 const fsPromises = fs.promises;
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 const Board = require('../../models/Board');
 const Thread = require('../../models/Thread');
 const Post = require('../../models/Post');
@@ -10,13 +8,20 @@ exports.index = async (request, response) => {
     const tab = 'boards';
 
     const limit = 50;
+    let offset = 0;
 
-    let boards = await Board.paginate({}, {limit}) //.sort({'created_at': 'desc'});
 
     if (request.query.page) {
     	const page = request.query.page;
-    	boards = await Board.paginate({}, { limit, page })
+    	offset = offset * page;
     }
+    let boards = await Board.findAll({
+		order:[
+			['id', 'desc']
+		],
+		limit,
+		offset
+	});
 
     if (request.query.search) {
     	const word = request.query.search;

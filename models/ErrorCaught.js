@@ -1,9 +1,4 @@
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
-
-const Schema = mongoose.Schema;
-
-const schema = new Schema({
+let p = {
     title: String,
     page: String,
     ip: String,
@@ -16,10 +11,6 @@ const schema = new Schema({
         type: Date,
         default: Date.now
     },
-});
+}
 
-schema.plugin(mongoosePaginate);
-
-const ErrorCaught = mongoose.model('ErrorCaught', schema);
-
-module.exports = ErrorCaught;
+module.exports = 'ErrorCaught';

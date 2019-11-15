@@ -1,4 +1,3 @@
-const Session = require('../models/Session');
 const svgCaptcha = require('svg-captcha');
 const redis = require('redis');
 let client = redis.createClient();

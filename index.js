@@ -10,10 +10,6 @@ const redis = require('redis');
 
 let RedisStore = require('connect-redis')(session);
 let client = redis.createClient();
-const MongoStore = require('connect-mongo')(session);
-
-const mongoose = require('mongoose');
-mongoose.connect(`mongodb://localhost/${config.db.name}`, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 
 const port = config.app.port;
 

@@ -27,7 +27,12 @@ module.exports = (passport) => {
         });
 
          */
-        User.findById(id).then(function(user) {
+        User.findOne({
+            where: {
+                id
+            }
+        })
+            .then(function(user) {
             if (user) {
                 done(null, user.get());
             } else {

@@ -1,7 +1,5 @@
 const fs = require('fs');
 const fsPromises = fs.promises;
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 const Board = require('../../models/Board');
 const Thread = require('../../models/Thread');
 const Post = require('../../models/Post');
