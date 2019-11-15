@@ -39,7 +39,7 @@ router.get('/boards', BoardsController.index);
 router.get('/boards/create', BoardsController.create);
 router.post('/boards', BoardsController.store);
 
-router.get('/boards/:board_slug', BansMiddleware, ThreadsController.index);
+router.get('/boards/:board_slug', ThreadsController.index);
 router.get('/boards/:board_slug/:board_id/create', ThreadsController.create);
 router.post('/boards/:board_slug/:board_id/create', ThreadsController.store);
 
