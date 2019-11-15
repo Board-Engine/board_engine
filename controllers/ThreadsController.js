@@ -37,10 +37,12 @@ exports.index = async (request, response) => {
     };
 
     if (request.params.board_slug) {
-
+        const slug = request.params.board_slug
         const id = await request.query.board_id;
         const board = await Board.findOne({
-            where:{ id },
+            where:{
+                slug,
+            },
             include:[
                 {
                     model:Thread,

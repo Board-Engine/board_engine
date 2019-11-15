@@ -54,7 +54,6 @@ exports.store = async (request, response) => {
     if (! Helpers.Validation.validate(validations)) {
         return response.json('validation fails')
     }
-
     const thread_id = await request.params.thread_id;
     const board_slug = await request.body.board_slug;
     const content = await request.body.content;
@@ -72,6 +71,8 @@ exports.store = async (request, response) => {
         author,
         board_id
     };
+
+    /*
     if (request.files.image) {
         const limit = 1000 * 1000;
 
@@ -87,6 +88,7 @@ exports.store = async (request, response) => {
         await image.mv(`storage/app/boards/${folder}/${name}`);
         const image_path = `/images/${thread.folder}.`;
     }
+     */
 
     await Post.create(data);
     client.incr('posts');
