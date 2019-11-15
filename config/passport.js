@@ -1,5 +1,4 @@
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
 const User = require('../models/User');
 const argon2 = require('argon2');
 
@@ -22,8 +21,18 @@ module.exports = (passport) => {
     });
 
     passport.deserializeUser(function(id, done) {
+        /*
         User.findById(id, function(err, user) {
             done(err, user);
+        });
+
+         */
+        User.findById(id).then(function(user) {
+            if (user) {
+                done(null, user.get());
+            } else {
+                done(user.errors, null);
+            }
         });
     });
 };

@@ -1,29 +1,34 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const argon2 = require('argon2');
-
-let schema = new Schema({
-    name: String,
-    password: String,
-
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
-    },
+const config = require('../env');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, {
+    host: 'localhost',
+    dialect: 'postgres'
 });
 
-schema.methods.generatePassword = async (password) => {
-    this.password = await argon2.hash(password);
-};
-
-schema.methods.verifyPassword = async (password) => {
-    return await argon2.verify(this.password, password);
-};
-
-const User = mongoose.model('User', schema);
+const User = sequelize.define('user', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'user'
+    },
+    createdAt: {type: Sequelize.DATE, field: 'created_at'},
+    updatedAt: {type: Sequelize.DATE, field: 'updated_at'},
+}, {
+    sequelize,
+    modelName: 'User'
+});
 
 module.exports = User;
