@@ -7,7 +7,8 @@ const PostsController = require('../controllers/PostsController');
 const CaptchaController = require('../controllers/CaptchaController');
 const LoginController = require('../controllers/Auth/LoginController');
 const fileUpload = require('express-fileupload');
-
+const CounterMiddleware = require('../middleware/Counter');
+const BansMiddleware = require('../middleware/bans');
 
 //const errorsMiddleware = require('../middleware/errors');
 // TODO DEBUG ERROR CATCHER
@@ -23,7 +24,7 @@ require('../config/passport')(passport);
 router.use(passport.initialize());
 router.use(passport.session());
 
-const BansMiddleware = require('../middleware/bans');
+
 
 
 router.use(fileUpload({
@@ -33,7 +34,7 @@ router.use(fileUpload({
 	}
 }));
 
-router.get('/', FrontController.index);
+router.get('/', CounterMiddleware, FrontController.index);
 router.get('/images/:type/:folder/:image', FrontController.image);
 
 router.get('/boards', BoardsController.index);

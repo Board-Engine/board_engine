@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-const path = require('path');
 const fs = require('fs');
 const fsPromises = fs.promises;
 const Board = require('../models/Board');
@@ -16,16 +14,10 @@ const client = redis.createClient();
 const getAsync = promisify(client.get).bind(client);
 const keysAsync = promisify(client.keys).bind(client);
 
-
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
 
-const CounterMiddleware = require('../middleware/Counter');
-
-
 exports.index = async (request, response) => {
-
-	CounterMiddleware.handle();
 	const limit = 40
 
     let boards = await Board.findAll({
@@ -89,7 +81,6 @@ exports.image = async (request, response) => {
 };
 
 exports.getContact = async (request, response) => {
-	CounterMiddleware.handle()
 	const head_title = 'contact';
 	const qtox = config.contact.qtox;
 	return response.render('front/contact.html', {
@@ -99,7 +90,6 @@ exports.getContact = async (request, response) => {
 };
 
 exports.rules = async (request, response) => {
-	CounterMiddleware.handle()
 	const head_title = 'Rules';
 	fs.readFile('storage/rules.md', 'utf8', (error, content) => {
 		if (error) {
@@ -159,7 +149,6 @@ exports.postReport = async (request, response) => {
 };
 
 exports.getSearch = async (request, response) => {
-	CounterMiddleware.handle()
 	const head_title = 'Search';
 	const words = request.query.words;
 	const section = request.query.section;
