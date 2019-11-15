@@ -157,7 +157,7 @@ exports.captcha = async (request, response) => {
 	request.session.captcha = captcha.text;
 	request.session.save(() => {
 		console.log('saved');
-		console.log(request.session);
+		console.log(request.session.captcha);
 		response.type('svg');
 		response.status(200).send(captcha.data);
 	})
@@ -166,7 +166,7 @@ exports.captcha = async (request, response) => {
 exports.postCaptchaConfirm = async (request, response) => {
 	const sessions = await Session.find();
 	if (! sessions.length) {
-		console.log('sessions empty')
+		console.log('sessions empty');
 		return response.status(202).send(false)
 	}
 
@@ -178,7 +178,7 @@ exports.postCaptchaConfirm = async (request, response) => {
 		const captcha = await cookie.captcha;
 
 		if (captcha_input === captcha) {
-			console.log('captcha is ok')
+			console.log('captcha is validated SUCCESSFULLY');
 			return response.status(202).send(true);
 		}
 	}
