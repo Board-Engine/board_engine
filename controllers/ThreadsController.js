@@ -9,7 +9,6 @@ const Post = require('../models/Post');
 
 const redis = require('redis');
 const client = redis.createClient();
-const CounterMiddleware = require('../middleware/Counter');
 
 exports.index = async (request, response) => {
 

@@ -6,12 +6,10 @@ const Thread = require('../models/Thread');
 const Helpers = require('./Helpers');
 const redis = require('redis');
 const client = redis.createClient();
-const CounterMiddleware = require('../middleware/Counter');
 const config = require('../env');
 const sequelize = require('sequelize');
 
 exports.index = async (request, response) => {
-    CounterMiddleware.handle();
 
     const head_title = 'Boards';
 
@@ -98,9 +96,6 @@ exports.store = async (request, response) => {
 };
 
 exports.show = async (request, response) => {
-    //response.json('slug')
-   // CounterMiddleware.handle();
-
     //const slug = request.params.slug;
     /*
     const board = await Board.findOne({

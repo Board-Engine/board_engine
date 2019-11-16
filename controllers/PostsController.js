@@ -6,13 +6,11 @@ const Post = require('../models/Post');
 const Helpers = require('./Helpers');
 const redis = require('redis');
 const client = redis.createClient();
-const CounterMiddleware = require('../middleware/Counter');
 const fs = require('fs');
 const fsPromises = fs.promises;
 
 exports.index = async (request, response) => {
 
-    CounterMiddleware.handle();
     const thread_id = await request.params.thread_id;
     const board_slug = await request.params.board_slug
     console.log('-------------- postsController')
