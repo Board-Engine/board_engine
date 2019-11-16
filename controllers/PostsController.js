@@ -73,7 +73,6 @@ exports.store = async (request, response) => {
         board_id
     };
 
-    /*
     if (request.files.image) {
         const limit = 1000 * 1000;
 
@@ -86,10 +85,12 @@ exports.store = async (request, response) => {
         const image = await request.files.image;
         const folder = await request.body.thread_folder;
         const name = await image.name;
+        data.image = name;
         await image.mv(`storage/app/boards/${folder}/${name}`);
-        const image_path = `/images/${thread.folder}.`;
+        const image_path = `/images/boards/${thread.folder}`;
+        data.image_path = image_path;
     }
-     */
+
 
     await Post.create(data);
     client.incr('posts');
