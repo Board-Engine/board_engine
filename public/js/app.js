@@ -1,10 +1,6 @@
 (() => {
 
-	const dialog_captcha = document.querySelector('.dialog_captcha');
-	const body = document.body;
-	const dialog_report = document.querySelector('.dialog_report');
-
-	const Helpers = {
+    const Helpers = {
 		Dialog: {
 			open(selector) {
 				document.querySelector('#backdrop').classList.add('backdrop');
@@ -50,6 +46,20 @@
 			console.log(event.target.submit());
 		}
 	});
+
+	// number chars left start
+    const limit = 1000;
+    const post_textarea = document.querySelector('.post textarea');
+    const chars_left = document.querySelector('#chars_left');
+    const post_textarea_content_length = post_textarea.value.length;
+    chars_left.innerHTML = `${limit - post_textarea_content_length} character${(limit - post_textarea_content_length) >= 2 ? 's' : ''} left`;
+
+    post_textarea.addEventListener('keyup', (event) => {
+        const content = event.target.value;
+        const nb_char_left = limit - content.length;
+        chars_left.innerHTML = `${nb_char_left} character${nb_char_left >= 2 ? 's' : ''} left`;
+    });
+    // number chars left end
 
 	document.querySelector('.form_captcha').addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -190,4 +200,6 @@
 			});
 		});
 	}
+
+
 })();
