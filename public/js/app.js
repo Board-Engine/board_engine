@@ -49,7 +49,7 @@
 
 	// number chars left start
     const limit = 1000;
-    const post_textarea = document.querySelector('.post textarea');
+    const post_textarea = document.querySelector('textarea');
     const chars_left = document.querySelector('#chars_left');
     const post_textarea_content_length = post_textarea.value.length;
     chars_left.innerHTML = `${limit - post_textarea_content_length} character${(limit - post_textarea_content_length) >= 2 ? 's' : ''} left`;
