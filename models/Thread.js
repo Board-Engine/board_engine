@@ -4,6 +4,7 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
     host: 'localhost',
     dialect: 'postgres'
 });
+const sequelizePaginate = require('sequelize-paginate')
 
 const Board = require('./Board');
 const Post = require('./Post');
@@ -52,6 +53,8 @@ const Thread = sequelize.define('thread', {
     sequelize,
     modelName: 'Thread'
 });
+
+sequelizePaginate.paginate(Thread);
 
 Thread.hasMany(Post, {
     foreignKey: 'thread_id',

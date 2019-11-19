@@ -5,9 +5,6 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const argon2 = require('argon2');
 const crypto = require('crypto');
-const config = require('../env');
-const mongoose = require('mongoose');
-mongoose.connect(`mongodb://localhost:27017/${config.db.name}`, {useNewUrlParser: true});
 
 async function CollectionUsersSeeder() {
 
@@ -27,9 +24,10 @@ async function CollectionBoardsSeeder () {
         const data = {
             title,
             slug: faker.helpers.slugify(title),
-            description: faker.lorem.words(20),
-            image: crypto.randomBytes(12).toString('hex'),
-            image_path: 'storage/app/boards/test'
+            description: faker.lorem.words(9),
+            folder: crypto.randomBytes(12).toString('hex'),
+            image_path: 'storage/app/boards/test',
+            ip: '127.0.0.1'
         };
 
         Board.create(data)
@@ -38,18 +36,18 @@ async function CollectionBoardsSeeder () {
 
 
 async function CollectionThreadsSeeder () {
-    const boards = await Board.find();
+    const boards = await Board.findAll();
     for (board of boards) {
 
         for (let i = 0; i < 30; i++) {
-            const id = board['_id'];
+            const id = board.id;
             const title = faker.lorem.words(9)
 
             const data = {
                 board_id: id,
                 title,
                 slug: faker.helpers.slugify(title),
-                content: faker.lorem.words(20),
+                content: faker.lorem.words(9),
                 folder: '11111'
             };
 
@@ -59,18 +57,21 @@ async function CollectionThreadsSeeder () {
 }
 
 async function CollectionPostsSeeder () {
-    const threads = await Thread.find();
+    const threads = await Thread.findAll();
     for (thread of threads) {
         for (let i = 0; i < 30; i++) {
-            const thread_id = thread['_id'];
+            const thread_id = thread.id;
+            const board_id = thread.board_id;
 
             const data = {
+                board_id,
                 thread_id,
-                content: faker.lorem.words(50),
-                author: 'Anonymouse'
+                content: faker.lorem.words(9),
+                author: 'Anonymous',
+                ip: '127.0.0.1'
             };
 
-            Post.create(data);
+            await Post.create(data)
         }
     }
 }
@@ -78,9 +79,9 @@ async function CollectionPostsSeeder () {
 
 
 async function main() {
-    // await CollectionBoardsSeeder();
-   // await CollectionThreadsSeeder();
+     //await CollectionBoardsSeeder();
+    //await CollectionThreadsSeeder();
     //await CollectionPostsSeeder();
-    await CollectionUsersSeeder();
+    //await CollectionUsersSeeder();
 }
 main();
