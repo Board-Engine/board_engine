@@ -54,10 +54,34 @@
     const post_textarea_content_length = post_textarea.value.length;
     chars_left.innerHTML = `${limit - post_textarea_content_length} character${(limit - post_textarea_content_length) >= 2 ? 's' : ''} left`;
 
+
+	function getHashTags(inputText) {
+		var regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+		var matches = [];
+		var match;
+
+		while ((match = regex.exec(inputText))) {
+			matches.push(match[1]);
+		}
+
+		return matches;
+	}
+
     post_textarea.addEventListener('keyup', (event) => {
         const content = event.target.value;
         const nb_char_left = limit - content.length;
         chars_left.innerHTML = `${nb_char_left} character${nb_char_left >= 2 ? 's' : ''} left`;
+
+        // hash tag
+		const hash_tags_input =  document.querySelector('#hash_tags');
+		hash_tags_input.value = '';
+		hash_tags_input.placeholder = ''
+		const hash_tags = getHashTags(content);
+		let value_input = hash_tags_input.value;
+		for (hash_tag of hash_tags) {
+			value_input += `#${hash_tag} `;
+		}
+		hash_tags_input.value = value_input
     });
     // number chars left end
 
@@ -200,6 +224,4 @@
 			});
 		});
 	}
-
-
 })();
