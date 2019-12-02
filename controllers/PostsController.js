@@ -3,6 +3,8 @@ const crypto = require('crypto');
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const HashTag = require('../models/HashTag');
+const HashTagJoin = require('../models/HashTagJoin');
 const Helpers = require('./Helpers');
 const redis = require('redis');
 const client = redis.createClient();
@@ -73,7 +75,7 @@ exports.store = async (request, response) => {
         board_id
     };
 
-    if (request.files.image) {
+    if (request.files != null) {
         const limit = 1000 * 1000;
 
         if (request.files.image.size > limit) {
@@ -91,8 +93,48 @@ exports.store = async (request, response) => {
         data.image_path = image_path;
     }
 
+    const post = await Post.create(data);
+    console.log(post)
 
-    await Post.create(data);
+    // hash tags
+    function getHashTags(inputText) {
+        let regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+        let matches = [];
+        let match;
+
+        while ((match = regex.exec(inputText))) {
+            matches.push(match[1]);
+        }
+
+        return matches;
+    }
+
+    let hash_tags_array = [];
+    let hash_tags_input = getHashTags(data.content);
+    for (hash_tag of hash_tags_input) {
+        if (! hash_tags_array.includes(hash_tag)) {
+            hash_tags_array.push(`#${hash_tag}`);
+        }
+    }
+
+    for (hash_tag of hash_tags_array) {
+        const data = {
+            name: hash_tag
+        };
+        const hashtagDB = await HashTag.create(data)
+
+        const data_hashtag = {
+            hash_tag_id: hashtagDB.id,
+            board_id,
+            thread_id: parseInt(thread_id),
+            post_id: post.id
+        };
+
+        console.log(data_hashtag)
+
+        await HashTagJoin.create(data_hashtag);
+    }
+
     client.incr('posts');
 
     if (board_slug) {

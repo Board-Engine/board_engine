@@ -61,7 +61,7 @@ ALTER TABLE threads ADD COLUMN IF NOT EXISTS image_path VARCHAR(150);
 ALTER TABLE threads ADD COLUMN IF NOT EXISTS ip VARCHAR(150);
 
 /*ALTER TABLE threads ADD COLUMN IF NOT EXISTS board_id INT NOT NULL REFERENCES boards (id);*/
-ALTER  TABLE threads ADD COLUMN IF NOT EXISTS board_id INT NOT NULL;
+ALTER TABLE threads ADD COLUMN IF NOT EXISTS board_id INT NOT NULL;
 ALTER TABLE threads DROP CONSTRAINT IF EXISTS board_id;
 ALTER TABLE threads ADD CONSTRAINT board_id FOREIGN KEY (board_id) REFERENCES boards (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -112,3 +112,46 @@ ALTER TABLE ip_ban ADD COLUMN IF NOT EXISTS reason VARCHAR(25);
 
 ALTER TABLE ip_ban ADD COLUMN IF NOT EXISTS created_at DATE DEFAULT CURRENT_DATE;
 ALTER TABLE ip_ban ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DATE;
+
+/* --------------------------------------------------------------------
+*
+* TABLE hash_tags
+*
+--------------------------------------------------------------------*/
+CREATE TABLE IF NOT EXISTS hash_tags(
+    id  SERIAL PRIMARY KEY
+);
+ALTER TABLE hash_tags ADD COLUMN IF NOT EXISTS name VARCHAR(25);
+
+ALTER TABLE hash_tags ADD COLUMN IF NOT EXISTS created_at DATE DEFAULT CURRENT_DATE;
+ALTER TABLE hash_tags ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DATE;
+
+
+
+/* --------------------------------------------------------------------
+*
+* TABLE hash_tags_threads
+*
+--------------------------------------------------------------------*/
+CREATE TABLE IF NOT EXISTS hash_tags_joins(
+    id  SERIAL PRIMARY KEY
+);
+
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS hash_tag_id INT NOT NULL;
+ALTER TABLE hash_tags_joins DROP CONSTRAINT IF EXISTS hash_tag_id;
+ALTER TABLE hash_tags_joins ADD CONSTRAINT hash_tag_id FOREIGN KEY (hash_tag_id) REFERENCES hash_tags (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS board_id INT NOT NULL;
+ALTER TABLE hash_tags_joins DROP CONSTRAINT IF EXISTS board_id;
+ALTER TABLE hash_tags_joins ADD CONSTRAINT board_id FOREIGN KEY (board_id) REFERENCES boards (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS thread_id INT NOT NULL;
+ALTER TABLE hash_tags_joins DROP CONSTRAINT IF EXISTS thread_id;
+ALTER TABLE hash_tags_joins ADD CONSTRAINT thread_id FOREIGN KEY (thread_id) REFERENCES threads (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS post_id INT NOT NULL;
+ALTER TABLE hash_tags_joins DROP CONSTRAINT IF EXISTS post_id;
+ALTER TABLE hash_tags_joins ADD CONSTRAINT post_id FOREIGN KEY (post_id) REFERENCES posts (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS created_at DATE DEFAULT CURRENT_DATE;
+ALTER TABLE hash_tags_joins ADD COLUMN IF NOT EXISTS updated_at DATE DEFAULT CURRENT_DATE;
