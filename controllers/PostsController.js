@@ -146,6 +146,7 @@ exports.store = async (request, response) => {
             thread_id: parseInt(thread_id),
             post_id: post.id
         };
+        await HashTagJoin.create(data_hashtag)
     }
 
     client.incr('posts');
