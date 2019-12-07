@@ -121,18 +121,31 @@ exports.store = async (request, response) => {
         const data = {
             name: hash_tag
         };
-        const hashtagDB = await HashTag.create(data)
+
+        let hash_tag_id;
+        const hash_tag_already_exists = await HashTag.findOne({
+            where: {
+                name: hash_tag
+            }
+        });
+
+        if (hash_tag_already_exists) {
+            hash_tag_already_exists.update({
+                updated_at: Date()
+            });
+            hash_tag_id = hash_tag_already_exists.id;
+        }
+        else {
+            const hashtagDB = await HashTag.create(data)
+            hash_tag_id = hashtagDB.id;
+        }
 
         const data_hashtag = {
-            hash_tag_id: hashtagDB.id,
+            hash_tag_id,
             board_id,
             thread_id: parseInt(thread_id),
             post_id: post.id
         };
-
-        console.log(data_hashtag)
-
-        await HashTagJoin.create(data_hashtag);
     }
 
     client.incr('posts');
