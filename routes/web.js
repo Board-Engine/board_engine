@@ -52,6 +52,7 @@ router.get('/threads', ThreadsController.index);
 router.get('/threads/:thread_id', PostsController.index); //
 
 router.get('/search', FrontController.getSearch);
+router.get('/hashtag/:hashtag', FrontController.getHashTag);
 
 router.get('/contact', FrontController.getContact);
 

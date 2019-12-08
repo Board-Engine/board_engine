@@ -73,7 +73,7 @@
         chars_left.innerHTML = `${nb_char_left} character${nb_char_left >= 2 ? 's' : ''} left`;
 
         // hash tag
-		const hash_tags_input =  document.querySelector('#hash_tags');
+		const hash_tags_input =  document.querySelector('#hash_tags');fribt
 		hash_tags_input.value = '';
 		hash_tags_input.placeholder = ''
 		const hash_tags = getHashTags(content);
@@ -84,6 +84,18 @@
 		hash_tags_input.value = value_input
     });
     // number chars left end
+
+	// replace hashtag
+	document.querySelectorAll('.card-post .card-body').forEach((card_body, index) => {
+		const innerHTML = card_body.innerHTML;
+		const result = innerHTML.replace(/(#\S*)/g, (hashtag) => {
+			const hash=hashtag.substr(1);
+			return `<a href='/hashtag/${hash}'>#${hash}</a>`
+		});
+		card_body.innerHTML = result;
+
+	});
+	// end replace hashtag
 
 	document.querySelector('.form_captcha').addEventListener('submit', (event) => {
 		event.preventDefault();

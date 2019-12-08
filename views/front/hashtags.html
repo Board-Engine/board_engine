@@ -1,0 +1,30 @@
+{% extends './_layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Results for hashtag #{{ hash_tag }}</h1>
+
+    {% for result in results %}
+        <div class="card card-post">
+            <div class="card-body">
+                <div>{{ result.author }}</div>
+                <div class="content">{{ result.content }}</div>
+                <div class="small">on thread: <a href="/threads/{{ result.thread_id }}">{{ result.title }}</a></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    // replace hashtag
+    document.querySelectorAll('.card-post .card-body .content').forEach((card_body, index) => {
+        const innerHTML = card_body.innerHTML;
+        const result = innerHTML.replace(/(#\S*)/g, (hashtag) => {
+            const hash=hashtag.substr(1);
+            return `<a href='/hashtag/${hash}'>#${hash}</a>`
+        });
+        card_body.innerHTML = result
+    })
+    // end replace hashtag
+</script>
+{% endblock %}

@@ -6,7 +6,12 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
 });
 const sequelizePaginate = require('sequelize-paginate');
 
-const HashTagJoin = sequelize.define('hash_tags_join', {
+const Board = require('./Board');
+const Thread = require('./Thread');
+const Post = require('./Post');
+const HashTag = require('./HashTag');
+
+const HashTagJoin = sequelize.define('hash_tags_joins', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -40,6 +45,11 @@ const HashTagJoin = sequelize.define('hash_tags_join', {
     modelName: 'HashTagJoin'
 });
 sequelizePaginate.paginate(HashTagJoin);
+
+HashTagJoin.belongsTo(Board, {foreignKey: 'board_id'});
+HashTagJoin.belongsTo(Thread, {foreignKey: 'thread_id'});
+HashTagJoin.belongsTo(Post, {foreignKey: 'post_id'});
+//HashTagJoin.belongsTo(HashTag, {foreignKey: 'hash_tag_id'});
 
 module.exports = HashTagJoin;
 

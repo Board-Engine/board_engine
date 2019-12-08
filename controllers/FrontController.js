@@ -3,6 +3,8 @@ const fsPromises = fs.promises;
 const Board = require('../models/Board');
 const Thread = require('../models/Thread');
 const Post = require('../models/Post');
+const HashTag = require('../models/HashTag');
+const HashTagJoin = require('../models/HashTagJoin');
 const Report = require('../models/Report');
 const config = require('../env');
 const md = require('markdown-it')();
@@ -16,6 +18,12 @@ const keysAsync = promisify(client.keys).bind(client);
 
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, {
+	host: 'localhost',
+	dialect: 'postgres'
+});
 
 exports.index = async (request, response) => {
 	const limit = 40
@@ -194,6 +202,28 @@ exports.getSearch = async (request, response) => {
 		words,
 		section,
 		results,
+	})
+};
+
+exports.getHashTag = async (request, response) => {
+	const hash_tag = await request.params.hashtag;
+	const head_title = `Search #${hash_tag}`
+
+	const query = `select * from hash_tags 
+					LEFT JOIN hash_tags_joins on hash_tags.id = hash_tags_joins.hash_tag_id
+					LEFT JOIN boards AS BOARDS on boards.id = hash_tags_joins.board_id
+					LEFT JOIN threads AS THREADS on threads.id = hash_tags_joins.thread_id
+					LEFT JOIN posts AS POSTS on posts.id = hash_tags_joins.post_id
+					WHERE name = '#${hash_tag}'
+					`;
+
+	let results = await sequelize.query(query, { raw: true })
+	results = results[0]
+
+	return await response.render('front/hashtags.html', {
+		head_title,
+		hash_tag,
+		results
 	})
 };
 

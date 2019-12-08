@@ -28,13 +28,11 @@ const HashTag = sequelize.define('hash_tag', {
     modelName: 'HashTag'
 });
 sequelizePaginate.paginate(HashTag);
-/*
+
 HashTag.hasMany(HashTagJoin, {
     foreignKey: 'hash_tag_id',
     foreignKeyConstraint: true
 });
-
- */
 
 module.exports = HashTag;
 

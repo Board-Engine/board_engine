@@ -116,6 +116,9 @@ table {
 .text-right {
   text-align: right; }
 
+.small {
+  font-size: 0.8rem; }
+
 dialog {
   position: fixed;
   top: 5rem;
