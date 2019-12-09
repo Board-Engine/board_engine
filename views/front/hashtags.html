@@ -3,7 +3,20 @@
 {% block content %}
 <div class="container">
     <h1>Results for hashtag #{{ hash_tag }}</h1>
+    <form action="/hashtag" method="get" id="search_form_hash_tag">
+        <div>
+            <input type="search" placeholder="Search hashtag" class="search_input">
+        </div>
+        <div class="hash_tag_suggests">
+            <!--
+               <div class="hash_tag_suggest">
+                #teazeazeaze7az5ezae4azeaz534
+                </div>
+             -->
+        </div>
 
+    </form>
+    
     {% for result in results %}
         <div class="card card-post">
             <div class="card-body">
@@ -26,5 +39,37 @@
         card_body.innerHTML = result
     })
     // end replace hashtag
+
+    document.querySelector('.search_input').addEventListener('keyup', (event) => {
+        const search_input = event.target.value;
+        const is_hash_tag = search_input.charAt(0) === '#';
+
+        let data = {};
+        if (is_hash_tag) {
+            data.hash_tag = search_input
+        }
+
+        let url = '/search';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then((hash_tags) => {
+                const hash_tag_suggests = document.querySelector('.hash_tag_suggests');
+                hash_tag_suggests.innerHTML = '';
+                if (Array.isArray(hash_tags)) {
+                    for (hash_tag of hash_tags) {
+
+                        const template = `<div class="hash_tag_suggest"><a href="/hashtag/${hash_tag.name.substr(1)}">${hash_tag.name}</a></div>`;
+                        hash_tag_suggests.insertAdjacentHTML('beforeEnd', template)
+                    }
+                }
+            })
+    })
 </script>
 {% endblock %}

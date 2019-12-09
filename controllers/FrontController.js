@@ -24,6 +24,7 @@ const sequelize = new Sequelize(config.db.database, config.db.username, config.d
 	host: 'localhost',
 	dialect: 'postgres'
 });
+const Op = Sequelize.Op
 
 exports.index = async (request, response) => {
 	const limit = 40
@@ -203,6 +204,26 @@ exports.getSearch = async (request, response) => {
 		section,
 		results,
 	})
+};
+
+exports.postSearch = async (request, response) => {
+	const body = request.body;
+	const hash_tag = body.hash_tag;
+
+	if (! hash_tag) {
+		return response.status(204).send('204')
+	}
+
+	const hash_tags = await HashTag.findAll({
+		where: {
+			name: {
+				[Op.like]: `%${hash_tag}%`,
+			}
+		},
+		limit: 12
+	});
+
+	return response.json(hash_tags)
 };
 
 exports.getHashTag = async (request, response) => {

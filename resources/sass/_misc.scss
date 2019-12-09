@@ -4,3 +4,20 @@
 		margin: 1rem 0;
 	}
 }
+
+#search_form_hash_tag {
+	position: relative;
+}
+
+
+.hash_tag_suggests {
+	position: absolute;
+
+
+	.hash_tag_suggest {
+		background: #fff;
+		border: 1px solid rgba(0, 0, 0, 0.125);
+		border-radius: .25rem;
+		padding: .6rem;
+	}
+}
