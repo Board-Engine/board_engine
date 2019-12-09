@@ -48,6 +48,10 @@
         if (is_hash_tag) {
             data.hash_tag = search_input
         }
+        const hash_tag_suggests = document.querySelector('.hash_tag_suggests');
+        if (! search_input.length) {
+            hash_tag_suggests.innerHTML = '';
+        }
 
         let url = '/search';
         fetch(url, {
@@ -60,7 +64,7 @@
         })
             .then(response => response.json())
             .then((hash_tags) => {
-                const hash_tag_suggests = document.querySelector('.hash_tag_suggests');
+
                 hash_tag_suggests.innerHTML = '';
                 if (Array.isArray(hash_tags)) {
                     for (hash_tag of hash_tags) {
